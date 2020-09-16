@@ -1,0 +1,12 @@
+# Project exclude paths
+/.gradle/
+/authorization-server/out/
+/authorization-server/out/production/classes/
+/common-persistence/build/
+/common-persistence/out/
+/common-persistence/out/production/classes/
+/discovery-server/build/
+/discovery-server/out/
+/discovery-server/out/production/classes/
+/google-server/out/
+/google-server/out/production/classes/

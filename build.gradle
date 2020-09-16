@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group 'com.webapp.movienight'
+version '1.0-SNAPSHOT'
+
+apply from: 'versions.gradle'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
