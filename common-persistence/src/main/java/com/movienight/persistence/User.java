@@ -12,6 +12,6 @@ import javax.persistence.Table;
 @Controller
 @Getter
 @Setter
-public class User extends IdCreatedUpdatedDeletedEntity {
+public class User extends IdEntity {
 
 }

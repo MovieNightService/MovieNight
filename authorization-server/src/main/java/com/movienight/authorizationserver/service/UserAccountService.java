@@ -5,5 +5,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserAccountService extends UserDetailsService {
 
-    UserAccount findByIdUnsafe(Long id);
+    UserAccount findById(Long id);
 }

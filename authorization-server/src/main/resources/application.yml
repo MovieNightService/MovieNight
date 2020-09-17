@@ -6,11 +6,9 @@ server:
 spring:
   application:
     name: authorization-server
-  liquibase:
-    change-log: classpath:db.changelog/changelog-master.xml
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/auth_db

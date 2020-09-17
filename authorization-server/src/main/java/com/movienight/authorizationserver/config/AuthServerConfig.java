@@ -35,11 +35,10 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients
-                .inMemory()
+        clients.inMemory()
                 .withClient(clientID)
                 .secret(passwordEncoder.encode(clientSecret))
-                .authorizedGrantTypes("authorization_code", "refresh_token")
+                .authorizedGrantTypes("authorization_code")
                 .scopes("user_info")
                 .autoApprove(true)
                 .redirectUris(redirectURLs);

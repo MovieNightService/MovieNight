@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'com.webapp.movienight'
+group 'com.movienight'
 version '1.0-SNAPSHOT'
 
 apply from: 'versions.gradle'

@@ -1,6 +1,5 @@
 allprojects {
     ext {
-//        springCloudVersion = 'Greenwich.SR2'
         springCloudVersion = 'Hoxton.SR8'
     }
 }

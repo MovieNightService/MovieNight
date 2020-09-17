@@ -2,5 +2,4 @@ rootProject.name = 'MovieNight'
 include 'discovery-server'
 include 'authorization-server'
 include 'common-persistence'
-include 'google-server'
 

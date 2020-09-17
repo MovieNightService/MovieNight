@@ -1,6 +1,7 @@
 package com.movienight.authorizationserver.persistence.model;
 
 import com.movienight.persistence.IdCreatedUpdatedDeletedEntity;
+import com.movienight.persistence.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,14 +12,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "account")
 @Getter
 @Setter
+@Entity
+@Table(name = "account")
 public class UserAccount extends IdCreatedUpdatedDeletedEntity implements UserDetails  {
 
-    @Column(nullable = false, unique = true)
-    private String username;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @Column(nullable = false, unique = true)
     private String email;

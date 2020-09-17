@@ -5,9 +5,5 @@ public class UserAccountNotFoundException extends RuntimeException {
     public UserAccountNotFoundException() {
         super("Account not found");
     }
-
-    public UserAccountNotFoundException(String message) {
-        super(message);
-    }
 }
 
