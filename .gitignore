@@ -10,3 +10,14 @@
 /discovery-server/out/production/classes/
 /google-server/out/
 /google-server/out/production/classes/
+target/
+*.iml
+.project
+.classpath
+.settings/
+dependency-reduced-pom.xml
+log/
+.idea/
+src/main/resources/META-INF/
+vi-soft-ng-local-resources/
+out/
