@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +18,20 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User extends IdCreatedUpdatedDeletedEntity implements UserDetails  {
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private Instant dateOfBirth;
+
+    @Column(nullable = false, unique = true)
+    private String phone;
+
+    private byte[] avatar;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -44,7 +59,7 @@ public class User extends IdCreatedUpdatedDeletedEntity implements UserDetails  
 
     @Override
     public String getUsername() {
-        return email;
+        return super.getUsername();
     }
 
     @Override

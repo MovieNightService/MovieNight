@@ -3,6 +3,7 @@ package com.kharkiv.movienight.transport.dto;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class UserCreateDto {
+public class UserUpdateDto {
 
     @NotBlank
     @NotNull
@@ -21,6 +22,15 @@ public class UserCreateDto {
     @NotNull
     private String lastName;
 
+    @NotBlank
+    @NotNull
+    private String username;
+
+    @NotBlank
+    @NotNull
+    @Email
+    private String email;
+
     @NotNull
     private Instant dateOfBirth;
 
@@ -28,19 +38,7 @@ public class UserCreateDto {
     @NotNull
     private String phone;
 
-    @NotBlank
-    @Email
-    @NotNull
-    private String email;
-
     @NotNull
     private byte[] avatar;
 
-    @NotBlank
-    @NotNull
-    private String password;
-
-    @NotBlank
-    @NotNull
-    private String confirmPassword;
 }
