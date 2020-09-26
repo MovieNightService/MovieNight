@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="amanivchuk">
+
+        <sql>
+            CREATE SEQUENCE if not exists hibernate_sequence START 1
+        </sql>
+
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="users_pkey" nullable="false"/>
+            </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_created_by_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_updated_by_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="date_of_birth" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agreement" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avatar" type="BYTEA"/>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="phone" type="varchar(255)"/>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_authority">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_user_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="authorities" type="varchar(255)"/>
+        </createTable>
+
+        <loadData tableName="users" file="classpath:db.changelog/population/users.csv"/>
+        <loadData tableName="user_authority" file="classpath:db.changelog/population/user_authority.csv"/>
+
+    </changeSet>
+</databaseChangeLog>

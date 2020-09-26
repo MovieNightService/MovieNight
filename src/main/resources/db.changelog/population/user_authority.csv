@@ -1,0 +1,4 @@
+user_id,authorities
+1      ,ADMIN
+2      ,MANAGER
+3      ,USER

@@ -8,13 +8,15 @@ spring:
     name: com.kharkiv.movienight
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     open-in-view: false
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/movie_night
-    data-username: postgres
-    data-password: root
+    username: postgres
+    password: root
+  liquibase:
+    change-log: classpath:db.changelog/changelog-master.xml
 
 user:
   oauth:
