@@ -1,7 +1,10 @@
 package com.kharkiv.movienight.service.user;
 
+import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.user.PasswordMismatchException;
+import com.kharkiv.movienight.exception.user.UserBadCredentialsException;
 import com.kharkiv.movienight.exception.user.UserNotFoundException;
+import com.kharkiv.movienight.exception.user.UserWithSuchEmailAlreadyExistsException;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
@@ -108,7 +111,58 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
+    @Override
+    public Long update(UserUpdateEmailDto dto) {
+
+        User actor = findById(getActorFromContext().getId());
+
+        validateUpdatingEmail(actor, dto);
+
+        actor.setEmail(dto.getNewEmail());
+
+        return actor.getId();
+    }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     private User findUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
+
+    /* update email validate */
+    private void validateUpdatingEmail(User actor, UserUpdateEmailDto dto) {
+
+        validateOldAndNewEmailNotEqual(dto);
+        validateTruePassword(actor, dto);
+        validateOldEmail(actor, dto);
+        validateUniqueEmail(dto.getNewEmail());
+    }
+
+    private void validateOldAndNewEmailNotEqual(UserUpdateEmailDto dto) {
+        if(dto.getNewEmail().equals(dto.getOldEmail())){
+            throw new BadRequestException("New email must be different from old");
+        }
+    }
+
+    private void validateTruePassword(User actor, UserUpdateEmailDto dto) {
+        if(!passwordEncoder.matches(dto.getPassword(), actor.getPassword())){
+            throw new UserBadCredentialsException();
+        }
+    }
+
+    private void validateOldEmail(User actor, UserUpdateEmailDto dto) {
+        if(!dto.getOldEmail().equals(actor.getEmail())){
+            throw new UserBadCredentialsException();
+        }
+    }
+
+    private void validateUniqueEmail(String newEmail) {
+        if(existByEmail(newEmail)){
+            throw new UserWithSuchEmailAlreadyExistsException();
+        }
+    }
+    /* end update email validate */
 }

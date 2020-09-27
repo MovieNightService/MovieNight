@@ -50,5 +50,4 @@ public interface AccessValidator extends ActorService {
     void validateUpdate(User actor);
 
     void validateRegistration(User actor);
-
 }

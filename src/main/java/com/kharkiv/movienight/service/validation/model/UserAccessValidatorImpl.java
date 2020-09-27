@@ -4,7 +4,6 @@ import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.service.validation.validator.AccessValidator;
 
 public class UserAccessValidatorImpl implements AccessValidator {
-
     @Override
     public void validateChangeRole(User actor) {
 

@@ -58,5 +58,10 @@ public class UserController {
     public void changeRole(@Validated UserRoleDto dto){
         userService.changeRole(dto);
     }
+
+    @PutMapping("/user/update-email")
+    public Long updateEmail( @RequestBody UserUpdateEmailDto dto){
+        return userService.update(dto);
+    }
 }
 

@@ -27,4 +27,8 @@ public interface UserService extends UserDetailsService, ActorService {
     void changeRole(UserRoleDto dto);
 
     User findById(Long id);
+
+    Long update(UserUpdateEmailDto dto);
+
+    boolean existByEmail(String email);
 }
