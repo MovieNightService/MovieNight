@@ -12,7 +12,7 @@ public interface UserService extends UserDetailsService, ActorService {
 
     UserOutcomeDto getUser(Principal principal);
 
-    Long registration(UserCreateDto dto);
+    Long registration(UserRegistrationDto dto);
 
     Long update(Long id, UserUpdateDto dto);
 

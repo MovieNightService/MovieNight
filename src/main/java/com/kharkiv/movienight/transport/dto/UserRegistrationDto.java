@@ -11,7 +11,11 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class UserCreateDto {
+public class UserRegistrationDto {
+
+    @NotBlank
+    @NotNull
+    private String username;
 
     @NotBlank
     @NotNull

@@ -1,6 +1,6 @@
 package com.kharkiv.movienight.exception;
 
-import com.kharkiv.movienight.exception.user.UserNotFoundException;
+import com.kharkiv.movienight.exception.user.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,17 +16,45 @@ import java.util.Map;
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Object> handleCityNotFoundException(UserNotFoundException exception, WebRequest request) {
+    public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(UserWithSuchEmailAlreadyExists.class)
+    public ResponseEntity<Object> handleUserWithSuchEmailAlreadyExists(UserWithSuchEmailAlreadyExists exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    public ResponseEntity<Object> handlePasswordMismatchException(PasswordMismatchException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserWithSuchPhoneAlreadyExists.class)
+    public ResponseEntity<Object> handleUserWithSuchPhoneAlreadyExists(UserWithSuchPhoneAlreadyExists exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserWithSuchUserNameAlreadyExists.class)
+    public ResponseEntity<Object> handleUserWithSuchUserNameAlreadyExists(UserWithSuchUserNameAlreadyExists exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserDateOfBirthInvalidException.class)
+    public ResponseEntity<Object> handleUserDateOfBirthInvalidException(UserDateOfBirthInvalidException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<Object> getObjectResponseEntity(WebRequest request, String message, HttpStatus status) {
         Map<String, Object> body = new LinkedHashMap<>();
 
         body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-        body.put("error", HttpStatus.NOT_FOUND.getReasonPhrase());
-        body.put("message", exception.getMessage());
+        body.put("status", status.value());
+        body.put("error", status.getReasonPhrase());
+        body.put("message", message);
         body.put("path", request.getContextPath());
-        body.put("action", "Create user with such ID or find a correct ID");
 
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(body, status);
     }
+
 }
