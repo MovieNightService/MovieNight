@@ -1,11 +1,10 @@
 package com.kharkiv.movienight.service.user;
 
-import com.kharkiv.movienight.exception.PasswordMismatchException;
-import com.kharkiv.movienight.exception.UserNotFoundException;
+import com.kharkiv.movienight.exception.user.PasswordMismatchException;
+import com.kharkiv.movienight.exception.user.UserNotFoundException;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
-import com.kharkiv.movienight.service.user.UserService;
 import com.kharkiv.movienight.transport.dto.*;
 import com.kharkiv.movienight.transport.mapper.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
