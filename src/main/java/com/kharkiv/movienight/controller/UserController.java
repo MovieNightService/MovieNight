@@ -4,11 +4,9 @@ import com.kharkiv.movienight.service.user.UserService;
 import com.kharkiv.movienight.transport.dto.*;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping("/user/registration")
-    public Long registration(@Validated UserCreateDto dto){
+    public Long registration(@Validated UserRegistrationDto dto){
         return userService.registration(dto);
     }
 

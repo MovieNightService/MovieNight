@@ -1,5 +1,6 @@
 package com.kharkiv.movienight.service.user;
 
+import com.kharkiv.movienight.exception.user.*;
 import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.user.PasswordMismatchException;
 import com.kharkiv.movienight.exception.user.UserBadCredentialsException;
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,13 +53,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long registration(UserCreateDto dto) {
+    public Long registration(UserRegistrationDto dto) {
         User user = userMapper.toEntity(dto);
 
-        if(dto.getConfirmPassword().equals(dto.getPassword())){
+        validateRegistration(dto);
+
+        if(isPasswordConfirmed(dto)){
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        } else {
-            throw new PasswordMismatchException();
         }
 
         user.setCreatedBy(getActorFromContext());
@@ -130,6 +134,53 @@ public class UserServiceImpl implements UserService {
 
     private User findUserByEmail(String email){
         return userRepository.findByEmail(email);
+    }
+
+    private void validateRegistration(UserRegistrationDto dto) {
+        validateDateOfBirth(dto.getDateOfBirth());
+        validateUsername(dto.getUsername());
+        validatePhone(dto.getPhone());
+        validateEmail(dto.getEmail());
+    }
+
+    private void validateEmail(String email) {
+        if(userRepository.existsByEmail(email)){
+            throw new UserWithSuchEmailAlreadyExists();
+        }
+    }
+
+    private void validatePhone(String phone) {
+        if(userRepository.existsByPhone(phone)){
+            throw new UserWithSuchPhoneAlreadyExists();
+        }
+    }
+
+    private void validateUsername(String username) {
+        if(userRepository.existsByUsername(username)){
+            throw new UserWithSuchUserNameAlreadyExists();
+        }
+    }
+
+    private void validateDateOfBirth(Instant dateOfBirth) {
+        Instant minDate = LocalDate.parse("2008-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant maxDate = LocalDate.parse("1920-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant();
+
+        int minDateResult = dateOfBirth.compareTo(minDate);
+        int maxDateResult = dateOfBirth.compareTo(maxDate);
+
+        boolean isValidDateOfBirth = (minDateResult < 0 && maxDateResult > 0 || minDateResult == 0);
+
+        if(!isValidDateOfBirth) {
+            throw new UserDateOfBirthInvalidException();
+        }
+    }
+
+    private boolean isPasswordConfirmed(UserRegistrationDto dto){
+        if(dto.getConfirmPassword().equals(dto.getPassword())){
+            return true;
+        } else {
+            throw new PasswordMismatchException();
+        }
     }
 
     /* update email validate */

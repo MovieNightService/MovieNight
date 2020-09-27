@@ -2,7 +2,7 @@ package com.kharkiv.movienight.transport.mapper;
 
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
-import com.kharkiv.movienight.transport.dto.UserCreateDto;
+import com.kharkiv.movienight.transport.dto.UserRegistrationDto;
 import com.kharkiv.movienight.transport.dto.UserOutcomeDto;
 import com.kharkiv.movienight.transport.dto.UserUpdateDto;
 import org.mapstruct.Mapper;
@@ -22,7 +22,7 @@ public abstract class UserMapper {
 
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
     @Mapping(target = "updatedAt", expression = "java(Instant.now())")
-    public abstract User toEntity(UserCreateDto dto);
+    public abstract User toEntity(UserRegistrationDto dto);
 
     public abstract User toEntity(UserUpdateDto dto, @MappingTarget User user);
 }
