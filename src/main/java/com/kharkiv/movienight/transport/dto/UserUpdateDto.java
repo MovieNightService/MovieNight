@@ -1,9 +1,7 @@
 package com.kharkiv.movienight.transport.dto;
 
-import com.kharkiv.movienight.persistence.model.user.UserRole;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
