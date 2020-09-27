@@ -5,6 +5,9 @@ import com.kharkiv.movienight.exception.user.UserNotFoundException;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
+import com.kharkiv.movienight.service.validation.type.MethodType;
+import com.kharkiv.movienight.service.validation.validator.provider.AccessValidatorProvider;
+import com.kharkiv.movienight.service.validation.type.ModelType;
 import com.kharkiv.movienight.transport.dto.*;
 import com.kharkiv.movienight.transport.mapper.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -82,6 +85,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserOutcomeDto> findAll() {
+        AccessValidatorProvider.getValidator(ModelType.USER).validate(MethodType.FIND_ALL);
         return userRepository.findAll().stream()
                 .map(userMapper::toOutcomeDto)
                 .collect(Collectors.toList());
