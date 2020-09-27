@@ -2,8 +2,8 @@ package com.kharkiv.movienight.exception.user;
 
 import com.kharkiv.movienight.exception.standard.BadRequestException;
 
-public class UserWithSuchPhoneAlreadyExists extends BadRequestException {
-    public UserWithSuchPhoneAlreadyExists() {
+public class UserWithSuchPhoneAlreadyExistsException extends BadRequestException {
+    public UserWithSuchPhoneAlreadyExistsException() {
         super("User with such phone already exists in system");
     }
 }

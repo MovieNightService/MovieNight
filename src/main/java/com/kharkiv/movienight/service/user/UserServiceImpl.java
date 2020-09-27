@@ -145,19 +145,19 @@ public class UserServiceImpl implements UserService {
 
     private void validateEmail(String email) {
         if(userRepository.existsByEmail(email)){
-            throw new UserWithSuchEmailAlreadyExists();
+            throw new UserWithSuchEmailAlreadyExistsException();
         }
     }
 
     private void validatePhone(String phone) {
         if(userRepository.existsByPhone(phone)){
-            throw new UserWithSuchPhoneAlreadyExists();
+            throw new UserWithSuchPhoneAlreadyExistsException();
         }
     }
 
     private void validateUsername(String username) {
         if(userRepository.existsByUsername(username)){
-            throw new UserWithSuchUserNameAlreadyExists();
+            throw new UserWithSuchUserNameAlreadyExistsException();
         }
     }
 

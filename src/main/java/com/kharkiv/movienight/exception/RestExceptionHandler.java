@@ -20,8 +20,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UserWithSuchEmailAlreadyExists.class)
-    public ResponseEntity<Object> handleUserWithSuchEmailAlreadyExists(UserWithSuchEmailAlreadyExists exception, WebRequest request) {
+    @ExceptionHandler(UserWithSuchEmailAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserWithSuchEmailAlreadyExistsException(UserWithSuchEmailAlreadyExistsException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
@@ -30,13 +30,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserWithSuchPhoneAlreadyExists.class)
-    public ResponseEntity<Object> handleUserWithSuchPhoneAlreadyExists(UserWithSuchPhoneAlreadyExists exception, WebRequest request) {
+    @ExceptionHandler(UserWithSuchPhoneAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserWithSuchPhoneAlreadyExistsException(UserWithSuchPhoneAlreadyExistsException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserWithSuchUserNameAlreadyExists.class)
-    public ResponseEntity<Object> handleUserWithSuchUserNameAlreadyExists(UserWithSuchUserNameAlreadyExists exception, WebRequest request) {
+    @ExceptionHandler(UserWithSuchUserNameAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserWithSuchUserNameAlreadyExistsException(UserWithSuchUserNameAlreadyExistsException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
