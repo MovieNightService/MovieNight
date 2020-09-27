@@ -61,5 +61,6 @@ public class UserController {
     public Long updateEmail( @RequestBody UserUpdateEmailDto dto){
         return userService.update(dto);
     }
+
 }
 

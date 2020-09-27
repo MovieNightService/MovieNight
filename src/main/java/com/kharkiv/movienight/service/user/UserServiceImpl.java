@@ -10,7 +10,8 @@ import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
 import com.kharkiv.movienight.service.validation.type.MethodType;
-import com.kharkiv.movienight.service.validation.validator.provider.AccessValidatorProvider;
+import com.kharkiv.movienight.service.validation.validator.Validator;
+import com.kharkiv.movienight.service.validation.validator.provider.ValidatorProvider;
 import com.kharkiv.movienight.service.validation.type.ModelType;
 import com.kharkiv.movienight.transport.dto.*;
 import com.kharkiv.movienight.transport.mapper.UserMapper;
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserOutcomeDto> findAll() {
-        AccessValidatorProvider.getValidator(ModelType.USER).validate(MethodType.FIND_ALL);
+        ValidatorProvider.getValidator(ModelType.USER).validate(MethodType.FIND_ALL);
         return userRepository.findAll().stream()
                 .map(userMapper::toOutcomeDto)
                 .collect(Collectors.toList());
@@ -117,13 +118,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long update(UserUpdateEmailDto dto) {
-
         User actor = findById(getActorFromContext().getId());
-
         validateUpdatingEmail(actor, dto);
-
         actor.setEmail(dto.getNewEmail());
-
         return actor.getId();
     }
 

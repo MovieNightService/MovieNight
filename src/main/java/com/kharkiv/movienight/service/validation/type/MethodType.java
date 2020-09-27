@@ -1,11 +1,13 @@
 package com.kharkiv.movienight.service.validation.type;
 
-public enum MethodType {
+public enum  MethodType {
     REGISTRATION,
     UPDATE,
     DELETE,
     RESTORE,
     FIND_ALL,
     AGREEMENT,
-    CHANGE_ROLE
+    CHANGE_ROLE,
+    PERMISSION_WRITE,
+    PERMISSION_READ
 }
