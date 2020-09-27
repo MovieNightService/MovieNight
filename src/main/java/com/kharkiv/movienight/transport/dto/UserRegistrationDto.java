@@ -37,7 +37,6 @@ public class UserRegistrationDto {
     @NotNull
     private String email;
 
-    @NotNull
     private byte[] avatar;
 
     @NotBlank

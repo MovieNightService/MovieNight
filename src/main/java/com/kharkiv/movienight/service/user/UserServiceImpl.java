@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void agreement(UserAgreementDto dto) {
-        User user = findById(dto.getUserId());
+        User user = findById(getActorFromContext().getId());
         user.setAgreement(dto.isAgreement());
     }
 
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
         int minDateResult = dateOfBirth.compareTo(minDate);
         int maxDateResult = dateOfBirth.compareTo(maxDate);
 
-        boolean isValidDateOfBirth = (minDateResult < 0 && maxDateResult > 0 || minDateResult == 0);
+        boolean isValidDateOfBirth = (minDateResult < 0 && maxDateResult > 0);
 
         if(!isValidDateOfBirth) {
             throw new UserDateOfBirthInvalidException();
