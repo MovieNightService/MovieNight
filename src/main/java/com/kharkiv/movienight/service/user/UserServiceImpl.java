@@ -1,18 +1,10 @@
 package com.kharkiv.movienight.service.user;
 
-import com.kharkiv.movienight.exception.user.*;
 import com.kharkiv.movienight.exception.standard.BadRequestException;
-import com.kharkiv.movienight.exception.user.PasswordMismatchException;
-import com.kharkiv.movienight.exception.user.UserBadCredentialsException;
-import com.kharkiv.movienight.exception.user.UserNotFoundException;
-import com.kharkiv.movienight.exception.user.UserWithSuchEmailAlreadyExistsException;
+import com.kharkiv.movienight.exception.user.*;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
-import com.kharkiv.movienight.service.validation.type.MethodType;
-import com.kharkiv.movienight.service.validation.validator.Validator;
-import com.kharkiv.movienight.service.validation.validator.provider.ValidatorProvider;
-import com.kharkiv.movienight.service.validation.type.ModelType;
 import com.kharkiv.movienight.transport.dto.*;
 import com.kharkiv.movienight.transport.mapper.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -93,7 +85,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserOutcomeDto> findAll() {
-        ValidatorProvider.getValidator(ModelType.USER).validate(MethodType.FIND_ALL);
         return userRepository.findAll().stream()
                 .map(userMapper::toOutcomeDto)
                 .collect(Collectors.toList());
@@ -180,37 +171,30 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /* update email validate */
     private void validateUpdatingEmail(User actor, UserUpdateEmailDto dto) {
-
-        validateOldAndNewEmailNotEqual(dto);
-        validateTruePassword(actor, dto);
         validateOldEmail(actor, dto);
-        validateUniqueEmail(dto.getNewEmail());
+        validateAccess(actor, dto);
+        validateNewEmail(dto);
     }
 
-    private void validateOldAndNewEmailNotEqual(UserUpdateEmailDto dto) {
+    private void validateNewEmail(UserUpdateEmailDto dto) {
         if(dto.getNewEmail().equals(dto.getOldEmail())){
-            throw new BadRequestException("New email must be different from old");
+            throw new UserWithSuchEmailAlreadyExistsException("New email must be different from old");
+        }
+        if(existByEmail(dto.getNewEmail())){
+            throw new UserWithSuchEmailAlreadyExistsException();
         }
     }
 
-    private void validateTruePassword(User actor, UserUpdateEmailDto dto) {
+    private void validateAccess(User actor, UserUpdateEmailDto dto) {
         if(!passwordEncoder.matches(dto.getPassword(), actor.getPassword())){
-            throw new UserBadCredentialsException();
+            throw new UserBadCredentialsException("Invalid password");
         }
     }
 
     private void validateOldEmail(User actor, UserUpdateEmailDto dto) {
         if(!dto.getOldEmail().equals(actor.getEmail())){
-            throw new UserBadCredentialsException();
+            throw new UserBadCredentialsException("Invalid email");
         }
     }
-
-    private void validateUniqueEmail(String newEmail) {
-        if(existByEmail(newEmail)){
-            throw new UserWithSuchEmailAlreadyExistsException();
-        }
-    }
-    /* end update email validate */
 }

@@ -5,6 +5,10 @@ import com.kharkiv.movienight.exception.standard.UnauthorizedException;
 public class UserBadCredentialsException extends UnauthorizedException {
 
     public UserBadCredentialsException() {
-        super("Invalid password");
+        super("Email/username or password are invalid");
+    }
+
+    public UserBadCredentialsException(String message) {
+        super(message);
     }
 }

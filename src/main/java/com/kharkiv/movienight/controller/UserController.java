@@ -4,8 +4,6 @@ import com.kharkiv.movienight.service.user.UserService;
 import com.kharkiv.movienight.transport.dto.*;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +23,12 @@ public class UserController {
     }
 
     @PostMapping("/user/registration")
-    public Long registration(@Validated UserRegistrationDto dto){
+    public Long registration(@Validated @RequestBody UserRegistrationDto dto){
         return userService.registration(dto);
     }
 
     @PutMapping("/user/update/{id}")
-    public Long update(@PathVariable Long id, @Validated UserUpdateDto dto){
+    public Long update(@PathVariable Long id, @Validated @RequestBody UserUpdateDto dto){
         return userService.update(id, dto);
     }
 
@@ -50,17 +48,17 @@ public class UserController {
     }
 
     @PutMapping("/user/agreement")
-    public void agreement(@Validated UserAgreementDto dto){
+    public void agreement(@Validated @RequestBody UserAgreementDto dto){
         userService.agreement(dto);
     }
 
     @PutMapping("/user/change-role")
-    public void changeRole(@Validated UserRoleDto dto){
+    public void changeRole(@Validated @RequestBody UserRoleDto dto){
         userService.changeRole(dto);
     }
 
     @PutMapping("/user/update-email")
-    public Long updateEmail( @RequestBody UserUpdateEmailDto dto){
+    public Long updateEmail(@Validated @RequestBody UserUpdateEmailDto dto){
         return userService.update(dto);
     }
 
