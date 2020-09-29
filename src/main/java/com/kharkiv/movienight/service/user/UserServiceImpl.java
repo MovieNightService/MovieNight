@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserOutcomeDto getUser(Principal principal) {
-        User user = findUserByEmail(principal.getName());
+        User user = findByUsername(principal.getName());
         return userMapper.toOutcomeDto(user);
     }
 
@@ -129,8 +129,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByEmail(email);
     }
 
-    private User findUserByEmail(String email){
-        return userRepository.findByEmail(email);
+    private User findByUsername(String name) {
+        return userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
     }
 
     private void validateRegistration(UserRegistrationDto dto) {
