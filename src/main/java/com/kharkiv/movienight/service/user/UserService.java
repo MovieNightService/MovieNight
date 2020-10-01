@@ -30,5 +30,7 @@ public interface UserService extends UserDetailsService, ActorService {
 
     Long update(UserUpdateEmailDto dto);
 
+    Long update(UserResetPasswordDto dto);
+
     boolean existByEmail(String email);
 }
