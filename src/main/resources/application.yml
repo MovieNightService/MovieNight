@@ -17,7 +17,6 @@ spring:
     password: root
   liquibase:
     change-log: classpath:db.changelog/changelog-master.xml
-
 user:
   oauth:
     clientId: R2dpxQ3vPrtfgF72

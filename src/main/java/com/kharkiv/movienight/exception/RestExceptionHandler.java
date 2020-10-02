@@ -52,6 +52,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserDeletedException.class)
+    public ResponseEntity<Object> handleUserDeletedException(UserDeletedException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     private ResponseEntity<Object> getObjectResponseEntity(WebRequest request, String message, HttpStatus status) {
         Map<String, Object> body = new LinkedHashMap<>();
 

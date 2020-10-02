@@ -6,8 +6,6 @@ public enum  MethodType {
     DELETE,
     RESTORE,
     FIND_ALL,
-    AGREEMENT,
     CHANGE_ROLE,
-    PERMISSION_WRITE,
-    PERMISSION_READ
+    UPDATE_EMAIL
 }

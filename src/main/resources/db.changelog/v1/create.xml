@@ -9,7 +9,7 @@
     <changeSet id="1" author="movie-night">
 
         <sql>
-            CREATE SEQUENCE if not exists hibernate_sequence START 1
+            CREATE SEQUENCE if not exists hibernate_sequence START 1;
         </sql>
 
         <createTable tableName="users">
