@@ -75,7 +75,7 @@ public class UserController {
 
     @PutMapping("reset-password")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public Long resetPassword(@Validated @RequestBody UserResetPasswordDto dto){
+    public Long resetPassword(@Valid @RequestBody UserResetPasswordDto dto){
         return userService.update(dto);
     }
 
