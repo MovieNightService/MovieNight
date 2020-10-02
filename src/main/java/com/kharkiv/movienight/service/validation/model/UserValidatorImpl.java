@@ -8,6 +8,7 @@ import com.kharkiv.movienight.persistence.repository.UserRepository;
 import com.kharkiv.movienight.service.validation.type.MethodType;
 import com.kharkiv.movienight.service.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.UserRegistrationDto;
+import com.kharkiv.movienight.transport.dto.UserResetPasswordDto;
 import com.kharkiv.movienight.transport.dto.UserUpdateDto;
 import com.kharkiv.movienight.transport.dto.UserUpdateEmailDto;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.regex.Pattern;
 
 @Service
 @Setter(onMethod_ = @Autowired)
@@ -78,8 +80,26 @@ public class UserValidatorImpl implements Validator<User> {
             case UPDATE_EMAIL:
                 validateUpdateEmail(actor, dto, user);
                 break;
+            case RESET_PASSWORD:
+                validateResetPassword(actor, dto);
+                break;
             default:
                 throw new BadRequestException("Incorrect METHOD_TYPE");
+        }
+    }
+
+    private void validateResetPassword(User actor, Object dto) {
+        UserResetPasswordDto resetPasswordDto = null;
+
+        if (dto instanceof UserResetPasswordDto) {
+            resetPasswordDto = (UserResetPasswordDto) dto;
+        }
+
+        if (resetPasswordDto != null) {
+            validateUpdatingPassword(actor, resetPasswordDto);
+            validatePasswordPattern(resetPasswordDto);
+        } else {
+            throw new BadRequestException("DTO was not get or his type is incorrect");
         }
     }
 
@@ -227,6 +247,37 @@ public class UserValidatorImpl implements Validator<User> {
     private void validateUserNotDeleted(User user) {
         if (!userRepository.existsByIdAndDeletedFalse(user.getId())) {
             throw new ForbiddenException();
+        }
+    }
+
+    private void validateUpdatingPassword(User actor, UserResetPasswordDto dto) {
+        if(!passwordEncoder.matches(dto.getOldPassword(), actor.getPassword())){
+            throw new UserBadCredentialsException("Invalid password");
+        }
+
+        if(actor.getPassword().equals(dto.getNewPassword())){
+            throw new UserBadCredentialsException("New password must be different from old");
+        }
+
+        if(!dto.getNewPassword().equals(dto.getConfirmPassword())){
+            throw new PasswordMismatchException();
+        }
+    }
+
+    private void validatePasswordPattern(UserResetPasswordDto dto) {
+        Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
+        Pattern lowerCasePatten = Pattern.compile("[a-z ]");
+
+        if (dto.getNewPassword().length() < 4) {
+            throw new UserBadCredentialsException("Password lenght must have at least 4 character");
+        }
+
+        if (!UpperCasePatten.matcher(dto.getNewPassword()).find()) {
+            throw new UserBadCredentialsException("Password must have at least one uppercase character");
+        }
+
+        if (!lowerCasePatten.matcher(dto.getNewPassword()).find()) {
+            throw new UserBadCredentialsException("Password must have at least one lowercase character");
         }
     }
 }

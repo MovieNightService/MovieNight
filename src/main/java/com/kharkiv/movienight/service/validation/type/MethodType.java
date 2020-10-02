@@ -7,5 +7,6 @@ public enum  MethodType {
     RESTORE,
     FIND_ALL,
     CHANGE_ROLE,
-    UPDATE_EMAIL
+    UPDATE_EMAIL,
+    RESET_PASSWORD
 }
