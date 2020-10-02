@@ -73,5 +73,10 @@ public class UserController {
         return userService.update(dto);
     }
 
+    @PutMapping("/user/reset-password")
+    public Long resetPassword(@Validated @RequestBody UserResetPasswordDto dto){
+        return userService.update(dto);
+    }
+
 }
 

@@ -1,6 +1,7 @@
 package com.kharkiv.movienight.service.user;
 
 import com.kharkiv.movienight.exception.user.UserNotFoundException;
+import com.kharkiv.movienight.exception.user.*;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -131,11 +133,56 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByIdAndDeletedTrue(id).orElseThrow(UserNotFoundException::new);
     }
 
+    @Override
+    public Long update(UserResetPasswordDto dto) {
+        User actor = findById(getActorFromContext().getId());
+        validateUpdatingPassword(actor, dto);
+        validatePasswordPattern(dto);
+        actor.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        return userRepository.save(actor).getId();
+    }
+
+    @Override
+    public boolean existByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     private User findByUsername(String name) {
         return userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
     }
 
     private User findByIdAndDeletedFalse(Long id) {
         return userRepository.findByIdAndDeletedFalse(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    private void validateUpdatingPassword(User actor, UserResetPasswordDto dto) {
+        if(!passwordEncoder.matches(dto.getOldPassword(), actor.getPassword())){
+            throw new UserBadCredentialsException("Invalid password");
+        }
+
+        if(actor.getPassword().equals(dto.getNewPassword())){
+            throw new UserBadCredentialsException("New password must be different from old");
+        }
+
+        if(!dto.getNewPassword().equals(dto.getConfirmPassword())){
+            throw new PasswordMismatchException();
+        }
+    }
+
+    private void validatePasswordPattern(UserResetPasswordDto dto) {
+        Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
+        Pattern lowerCasePatten = Pattern.compile("[a-z ]");
+
+        if (dto.getNewPassword().length() < 4) {
+            throw new UserBadCredentialsException("Password lenght must have at least 4 character");
+        }
+
+        if (!UpperCasePatten.matcher(dto.getNewPassword()).find()) {
+            throw new UserBadCredentialsException("Password must have at least one uppercase character");
+        }
+
+        if (!lowerCasePatten.matcher(dto.getNewPassword()).find()) {
+            throw new UserBadCredentialsException("Password must have at least one lowercase character");
+        }
     }
 }
