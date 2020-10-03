@@ -15,7 +15,9 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -82,6 +84,9 @@ public class UserValidatorImpl implements Validator<User> {
                 break;
             case RESET_PASSWORD:
                 validateResetPassword(actor, dto);
+                break;
+            case UPLOAD_AVATAR:
+                validateUploadAvatar(actor, dto);
                 break;
             default:
                 throw new BadRequestException("Incorrect METHOD_TYPE");
@@ -278,6 +283,26 @@ public class UserValidatorImpl implements Validator<User> {
 
         if (!lowerCasePatten.matcher(dto.getNewPassword()).find()) {
             throw new UserBadCredentialsException("Password must have at least one lowercase character");
+        }
+    }
+
+    private void validateUploadAvatar(User actor, Object dto) {
+        MultipartFile avatar = null;
+
+        if(dto instanceof MultipartFile){
+            avatar = (MultipartFile) dto;
+        }
+
+        if(avatar != null){
+            try {
+                if(avatar.getBytes().length < 0){
+                    throw new UploadAvatarException("File is empty");
+                }
+            } catch (IOException e) {
+                throw new UploadAvatarException("Can't read file");
+            }
+        }else{
+            throw new UploadAvatarException();
         }
     }
 }

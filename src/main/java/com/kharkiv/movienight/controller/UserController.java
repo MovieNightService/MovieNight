@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -79,5 +80,10 @@ public class UserController {
         return userService.update(dto);
     }
 
+    @PutMapping("upload-avatar")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+    public Long uploadAvatar(@RequestParam("avatar") MultipartFile avatar){
+        return userService.uploadAvatar(avatar);
+    }
 }
 
