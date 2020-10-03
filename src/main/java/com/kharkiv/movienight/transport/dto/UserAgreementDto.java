@@ -10,5 +10,8 @@ import javax.validation.constraints.NotNull;
 public class UserAgreementDto {
 
     @NotNull
+    private Long userId;
+
+    @NotNull
     private boolean agreement;
 }

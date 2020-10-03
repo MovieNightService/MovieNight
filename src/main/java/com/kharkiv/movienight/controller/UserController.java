@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("agreement")
-    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     public void agreement(@Valid @RequestBody UserAgreementDto dto){
         userService.agreement(dto);
     }

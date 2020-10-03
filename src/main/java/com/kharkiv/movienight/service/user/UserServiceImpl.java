@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void agreement(UserAgreementDto dto) {
-        User user = findById(getActorFromContext().getId());
+        User user = findById(dto.getUserId());
         user.setAgreement(dto.isAgreement());
     }
 
@@ -128,10 +128,6 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
-    private User findByIdAndDeletedTrue(Long id) {
-        return userRepository.findByIdAndDeletedTrue(id).orElseThrow(UserNotFoundException::new);
-    }
-
     @Override
     public Long update(UserResetPasswordDto dto) {
         User actor = findById(getActorFromContext().getId());
@@ -140,6 +136,10 @@ public class UserServiceImpl implements UserService {
 
         actor.setPassword(passwordEncoder.encode(dto.getNewPassword()));
         return userRepository.save(actor).getId();
+    }
+
+    private User findByIdAndDeletedTrue(Long id) {
+        return userRepository.findByIdAndDeletedTrue(id).orElseThrow(UserNotFoundException::new);
     }
 
     private User findByUsername(String name) {
