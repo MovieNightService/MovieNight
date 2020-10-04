@@ -1,5 +1,6 @@
 package com.kharkiv.movienight.service.user;
 
+import com.kharkiv.movienight.exception.user.UploadAvatarException;
 import com.kharkiv.movienight.exception.user.UserNotFoundException;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
@@ -12,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
@@ -147,5 +150,20 @@ public class UserServiceImpl implements UserService {
 
     private User findByIdAndDeletedFalse(Long id) {
         return userRepository.findByIdAndDeletedFalse(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public Long uploadAvatar(MultipartFile avatar) {
+        User actor = findById(getActorFromContext().getId());
+
+        validator.validate(MethodType.UPLOAD_AVATAR, avatar, actor);
+
+        try {
+            actor.setAvatar(avatar.getBytes());
+        } catch (IOException e) {
+            throw new UploadAvatarException();
+        }
+
+        return userRepository.save(actor).getId();
     }
 }

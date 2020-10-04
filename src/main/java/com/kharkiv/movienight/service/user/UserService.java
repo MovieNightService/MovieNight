@@ -4,6 +4,7 @@ import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.service.actor.ActorService;
 import com.kharkiv.movienight.transport.dto.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -32,4 +33,5 @@ public interface UserService extends UserDetailsService, ActorService {
 
     Long update(UserResetPasswordDto dto);
 
+    Long uploadAvatar(MultipartFile avatar);
 }

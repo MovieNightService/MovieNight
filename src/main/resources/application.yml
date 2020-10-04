@@ -17,6 +17,10 @@ spring:
     password: root
   liquibase:
     change-log: classpath:db.changelog/changelog-master.xml
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 user:
   oauth:
     clientId: R2dpxQ3vPrtfgF72
