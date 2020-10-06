@@ -7,8 +7,8 @@ import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
 import com.kharkiv.movienight.service.validation.type.MethodType;
 import com.kharkiv.movienight.service.validation.validator.Validator;
-import com.kharkiv.movienight.transport.dto.*;
-import com.kharkiv.movienight.transport.mapper.UserMapper;
+import com.kharkiv.movienight.transport.dto.user.*;
+import com.kharkiv.movienight.transport.mapper.user.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,8 +55,6 @@ public class UserServiceImpl implements UserService {
         validator.validate(MethodType.REGISTRATION, dto, user);
 
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setCreatedBy(getActorFromContext());
-        user.setUpdatedBy(getActorFromContext());
         user.setAuthorities(Collections.singletonList(UserRole.USER));
 
         return userRepository.save(user).getId();
@@ -93,8 +91,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserOutcomeDto> findAll() {
-        validator.validate(MethodType.FIND_ALL);
-
         return userRepository.findAll().stream()
                 .map(userMapper::toOutcomeDto)
                 .collect(Collectors.toList());
@@ -103,15 +99,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void agreement(UserAgreementDto dto) {
         User user = findById(dto.getUserId());
+
+        validator.validate(MethodType.AGREEMENT, user);
+
         user.setAgreement(dto.isAgreement());
     }
 
     @Override
     public void changeRole(UserRoleDto dto) {
         User user = findById(dto.getUserId());
-
-        validator.validate(MethodType.CHANGE_ROLE);
-
         user.setAuthorities(Collections.singletonList(dto.getRole()));
     }
 
@@ -140,18 +136,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(actor).getId();
     }
 
-    private User findByIdAndDeletedTrue(Long id) {
-        return userRepository.findByIdAndDeletedTrue(id).orElseThrow(UserNotFoundException::new);
-    }
-
-    private User findByUsername(String name) {
-        return userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
-    }
-
-    private User findByIdAndDeletedFalse(Long id) {
-        return userRepository.findByIdAndDeletedFalse(id).orElseThrow(UserNotFoundException::new);
-    }
-
     @Override
     public Long uploadAvatar(MultipartFile avatar) {
         User actor = findById(getActorFromContext().getId());
@@ -165,5 +149,19 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.save(actor).getId();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findByIdAndDeletedFalse(Long id) {
+        return userRepository.findByIdAndDeletedFalse(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    private User findByIdAndDeletedTrue(Long id) {
+        return userRepository.findByIdAndDeletedTrue(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    private User findByUsername(String name) {
+        return userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
     }
 }

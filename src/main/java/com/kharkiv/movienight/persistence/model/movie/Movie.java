@@ -40,8 +40,10 @@ public class Movie extends IdCreatedUpdatedDeletedEntity {
     @CollectionTable(name = "movie_genre", joinColumns = @JoinColumn(name = "movie_id"))
     private Set<Genre> genre = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            mappedBy = "movie"
-    )
-    private List<Event> events = new ArrayList<>();
+//    @OneToMany(
+//            fetch = FetchType.LAZY,
+//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+//            mappedBy = "movie"
+//    )
+//    private List<Event> events = new ArrayList<>();
 }

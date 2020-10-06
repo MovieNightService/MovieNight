@@ -1,5 +1,7 @@
 package com.kharkiv.movienight.exception;
 
+import com.kharkiv.movienight.exception.event.EventNotFoundException;
+import com.kharkiv.movienight.exception.movie.MovieNotFoundException;
 import com.kharkiv.movienight.exception.user.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -54,6 +56,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserDeletedException.class)
     public ResponseEntity<Object> handleUserDeletedException(UserDeletedException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MovieNotFoundException.class)
+    public ResponseEntity<Object> handleMovieNotFoundException(MovieNotFoundException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<Object> handleEventNotFoundException(EventNotFoundException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 

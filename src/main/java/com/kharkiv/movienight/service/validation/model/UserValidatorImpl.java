@@ -7,10 +7,10 @@ import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
 import com.kharkiv.movienight.service.validation.type.MethodType;
 import com.kharkiv.movienight.service.validation.validator.Validator;
-import com.kharkiv.movienight.transport.dto.UserRegistrationDto;
-import com.kharkiv.movienight.transport.dto.UserResetPasswordDto;
-import com.kharkiv.movienight.transport.dto.UserUpdateDto;
-import com.kharkiv.movienight.transport.dto.UserUpdateEmailDto;
+import com.kharkiv.movienight.transport.dto.user.UserRegistrationDto;
+import com.kharkiv.movienight.transport.dto.user.UserResetPasswordDto;
+import com.kharkiv.movienight.transport.dto.user.UserUpdateDto;
+import com.kharkiv.movienight.transport.dto.user.UserUpdateEmailDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -73,12 +73,6 @@ public class UserValidatorImpl implements Validator<User> {
             case RESTORE:
                 validateRestore(actor, user);
                 break;
-            case FIND_ALL:
-                validateFindAll(actor);
-                break;
-            case CHANGE_ROLE:
-                validateChangeRole(actor);
-                break;
             case UPDATE_EMAIL:
                 validateUpdateEmail(actor, dto, user);
                 break;
@@ -86,10 +80,20 @@ public class UserValidatorImpl implements Validator<User> {
                 validateResetPassword(actor, dto);
                 break;
             case UPLOAD_AVATAR:
-                validateUploadAvatar(actor, dto);
+                validateUploadAvatar(dto);
+                break;
+            case AGREEMENT:
+                validateAgreement(actor, user);
                 break;
             default:
                 throw new BadRequestException("Incorrect METHOD_TYPE");
+        }
+    }
+
+    private void validateAgreement(User actor, User user) {
+        validateUserNotDeleted(user);
+        if (actor.getId().equals(user.getId())) {
+            throw new ForbiddenException("You can't block yourself");
         }
     }
 
@@ -108,16 +112,8 @@ public class UserValidatorImpl implements Validator<User> {
         }
     }
 
-    public void validateChangeRole(User actor) {
-        validateUserNotDeleted(actor);
-    }
-
-    public void validateFindAll(User actor) {
-        validateUserNotDeleted(actor);
-    }
-
     public void validateDelete(User actor, User user) {
-        validateUserNotDeleted(actor);
+        validateUserNotDeleted(user);
         if (!actor.getId().equals(user.getId())) {
             throw new ForbiddenException("You can't delete another user");
         }
@@ -130,7 +126,7 @@ public class UserValidatorImpl implements Validator<User> {
     }
 
     public void validateUpdate(User actor, Object dto, User user) {
-        validateUserNotDeleted(actor);
+        validateUserNotDeleted(user);
 
         UserUpdateDto updateDto = null;
 
@@ -152,7 +148,7 @@ public class UserValidatorImpl implements Validator<User> {
     }
 
     private void validateUpdateEmail(User actor, Object dto, User user) {
-        validateUserNotDeleted(actor);
+        validateUserNotDeleted(user);
         if (!actor.getId().equals(user.getId())) {
             throw new ForbiddenException("You can't update email another user");
         }
@@ -286,7 +282,7 @@ public class UserValidatorImpl implements Validator<User> {
         }
     }
 
-    private void validateUploadAvatar(User actor, Object dto) {
+    private void validateUploadAvatar(Object dto) {
         MultipartFile avatar = null;
 
         if(dto instanceof MultipartFile){
@@ -295,7 +291,7 @@ public class UserValidatorImpl implements Validator<User> {
 
         if(avatar != null){
             try {
-                if(avatar.getBytes().length < 0){
+                if(avatar.getBytes().length <= 0){
                     throw new UploadAvatarException("File is empty");
                 }
             } catch (IOException e) {

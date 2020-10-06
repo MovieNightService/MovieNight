@@ -5,9 +5,8 @@ public enum  MethodType {
     UPDATE,
     DELETE,
     RESTORE,
-    FIND_ALL,
-    CHANGE_ROLE,
     UPDATE_EMAIL,
     RESET_PASSWORD,
+    AGREEMENT,
     UPLOAD_AVATAR
 }

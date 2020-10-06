@@ -77,6 +77,11 @@ ul, li {
 
 
 /*---------------------------------------------*/
+
+.alert-error {
+  color: #ae3c2c;
+}
+
 input {
   outline: none;
   border: none;

@@ -62,6 +62,93 @@
             <column name="authorities" type="varchar(255)"/>
         </createTable>
 
+        <createTable tableName="movies">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="movies_pkey" nullable="false"/>
+            </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_created_by_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_updated_by_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="duration" type="int"/>
+            <column name="issue" type="timestamp"/>
+            <column name="rating" type="double"/>
+            <column name="language" type="varchar(255)"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="trailer" type="varchar(255)"/>
+            <column name="age" type="int"/>
+        </createTable>
+
+        <createTable tableName="events">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="events_pkey" nullable="false"/>
+            </column>
+            <column name="created_by_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_created_by_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_updated_by_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="date" type="timestamp"/>
+            <column name="movie_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="movies_movie_id_fk" referencedTableName="movies"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="users_user_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_event">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="user_event_pkey" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="users_user_id_fk" referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="event_id" type="bigint">
+                <constraints foreignKeyName="events_event_id_fk" referencedTableName="events"
+                             referencedColumnNames="id"/>
+            </column>
+
+        </createTable>
+
+        <createTable tableName="movie_genre">
+            <column name="movie_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="movies_movie_id_fk" referencedTableName="movies"
+                             referencedColumnNames="id"/>
+            </column>
+            <column name="genre" type="varchar(255)"/>
+        </createTable>
+
         <loadData tableName="users" file="classpath:db.changelog/population/users.csv"/>
         <loadData tableName="user_authority" file="classpath:db.changelog/population/user_authority.csv"/>
 

@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.transport.dto;
+package com.kharkiv.movienight.transport.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;

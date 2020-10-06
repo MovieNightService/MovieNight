@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.transport.dto;
+package com.kharkiv.movienight.transport.dto.user;
 
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import lombok.Getter;

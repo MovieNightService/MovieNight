@@ -1,11 +1,10 @@
 package com.kharkiv.movienight.controller;
 
 import com.kharkiv.movienight.service.user.UserService;
-import com.kharkiv.movienight.transport.dto.*;
+import com.kharkiv.movienight.transport.dto.user.*;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

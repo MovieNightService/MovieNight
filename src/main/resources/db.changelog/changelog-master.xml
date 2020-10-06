@@ -6,6 +6,5 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <include file="v1/create.xml" relativeToChangelogFile="true"/>
-    <include file="v2/create-movie-event.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
