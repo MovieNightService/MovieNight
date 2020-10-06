@@ -1,5 +1,7 @@
 package com.kharkiv.movienight.persistence.model.user;
 
+import com.kharkiv.movienight.persistence.model.event.Event;
+import com.kharkiv.movienight.persistence.model.event.UserEvent;
 import com.kharkiv.movienight.persistence.model.general.IdCreatedUpdatedDeletedEntity;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import lombok.Getter;
@@ -46,6 +48,12 @@ public class User extends IdCreatedUpdatedDeletedEntity implements UserDetails  
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"))
     private List<UserRole> authorities = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Event> events = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    private UserEvent userEvent;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
