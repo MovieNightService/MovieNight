@@ -25,7 +25,7 @@ public class UserEventController {
         return userEventService.create(dto);
     }
 
-    @GetMapping("find-all")
+    @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
     public List<UserEventOutcomeDto> findAll(){
         return userEventService.findAll();

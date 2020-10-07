@@ -35,6 +35,4 @@ public class UserUpdateDto {
     @NotBlank
     @NotNull
     private String phone;
-
-    private byte[] avatar;
 }

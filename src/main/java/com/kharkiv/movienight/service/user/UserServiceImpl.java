@@ -39,12 +39,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        return userRepository.findByUsernameAndDeletedFalse(username).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public UserOutcomeDto getUser(Principal principal) {
-        User user = findByUsername(principal.getName());
+        User user = findByUsernameAndDeletedFalse(principal.getName());
         return userMapper.toOutcomeDto(user);
     }
 
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByIdAndDeletedTrue(id).orElseThrow(UserNotFoundException::new);
     }
 
-    private User findByUsername(String name) {
-        return userRepository.findByUsername(name).orElseThrow(UserNotFoundException::new);
+    private User findByUsernameAndDeletedFalse(String name) {
+        return userRepository.findByUsernameAndDeletedFalse(name).orElseThrow(UserNotFoundException::new);
     }
 }

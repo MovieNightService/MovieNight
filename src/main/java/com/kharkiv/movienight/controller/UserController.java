@@ -4,6 +4,7 @@ import com.kharkiv.movienight.service.user.UserService;
 import com.kharkiv.movienight.transport.dto.user.*;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("registration")
-    public Long registration(@RequestBody @Valid UserRegistrationDto dto){
+    public Long registration(@RequestBody @Valid UserRegistrationDto dto) {
         return userService.registration(dto);
     }
 
@@ -39,49 +40,49 @@ public class UserController {
 
     @DeleteMapping("delete/{id}")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public Long delete(@PathVariable Long id){
+    public Long delete(@PathVariable Long id) {
         return userService.delete(id);
     }
 
     @PutMapping("restore/{id}")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public Long restore(@PathVariable Long id){
+    public Long restore(@PathVariable Long id) {
         return userService.restore(id);
     }
 
-    @GetMapping("find-all")
+    @GetMapping
     @PreAuthorize(value = "hasAuthority('ADMIN')")
-    public List<UserOutcomeDto> findAll(){
+    public List<UserOutcomeDto> findAll() {
         return userService.findAll();
     }
 
     @PutMapping("agreement")
     @PreAuthorize(value = "hasAuthority('ADMIN')")
-    public void agreement(@Valid @RequestBody UserAgreementDto dto){
+    public void agreement(@Valid @RequestBody UserAgreementDto dto) {
         userService.agreement(dto);
     }
 
     @PutMapping("change-role")
     @PreAuthorize(value = "hasAuthority('ADMIN')")
-    public void changeRole(@Valid @RequestBody UserRoleDto dto){
+    public void changeRole(@Valid @RequestBody UserRoleDto dto) {
         userService.changeRole(dto);
     }
 
     @PutMapping("update-email")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public Long updateEmail(@Valid @RequestBody UserUpdateEmailDto dto){
+    public Long updateEmail(@Valid @RequestBody UserUpdateEmailDto dto) {
         return userService.update(dto);
     }
 
     @PutMapping("reset-password")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public Long resetPassword(@Valid @RequestBody UserResetPasswordDto dto){
+    public Long resetPassword(@Valid @RequestBody UserResetPasswordDto dto) {
         return userService.update(dto);
     }
 
     @PutMapping("upload-avatar")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
-    public Long uploadAvatar(@RequestParam("avatar") MultipartFile avatar){
+    public Long uploadAvatar(@RequestParam("avatar") MultipartFile avatar) {
         return userService.uploadAvatar(avatar);
     }
 }
