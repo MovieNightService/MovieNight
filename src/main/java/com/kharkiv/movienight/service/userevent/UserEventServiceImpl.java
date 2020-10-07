@@ -3,11 +3,15 @@ package com.kharkiv.movienight.service.userevent;
 import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
+import com.kharkiv.movienight.transport.dto.userevent.UserEventOutcomeDto;
 import com.kharkiv.movienight.transport.mapper.userevent.UserEventMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,5 +25,12 @@ public class UserEventServiceImpl implements UserEventService {
     public Long create(UserEventCreateDto dto) {
         UserEvent userEvent = userEventMapper.toEntity(dto);
         return userEventRepository.save(userEvent).getId();
+    }
+
+    @Override
+    public List<UserEventOutcomeDto> findAll() {
+        return userEventRepository.findAll().stream()
+                .map(userEventMapper::toOutcomeDto)
+                .collect(Collectors.toList());
     }
 }

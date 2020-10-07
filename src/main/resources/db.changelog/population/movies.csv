@@ -1,0 +1,4 @@
+created_by_id,created_at,updated_by_id,updated_at,deleted,name,duration,issue,rating,language,description,trailer,age
+1,1970-01-01T00:00:00.000,1,2020-04-04T10:10:26.853,false,Film 1,120,2005-04-04T10:10:26.853,null,english,Description of Film 1,null,18
+1,1970-01-01T00:00:00.000,1,2020-04-04T10:10:26.853,false,Film 2,110,2012-04-04T10:10:26.853,null,russian,Description of Film 2,null,21
+1,1970-01-01T00:00:00.000,1,2020-04-04T10:10:26.853,false,Film 3,140,2008-04-04T10:10:26.853,null,deutch,Description of Film 2,null,16

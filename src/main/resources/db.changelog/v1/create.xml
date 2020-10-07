@@ -152,5 +152,10 @@
         <loadData tableName="users" file="classpath:db.changelog/population/users.csv"/>
         <loadData tableName="user_authority" file="classpath:db.changelog/population/user_authority.csv"/>
 
+        <loadData tableName="movies" file="classpath:db.changelog/population/movies.csv"/>
+        <loadData tableName="movie_genre" file="classpath:db.changelog/population/movie_genre.csv"/>
+        <loadData tableName="events" file="classpath:db.changelog/population/events.csv"/>
+        <loadData tableName="user_event" file="classpath:db.changelog/population/user_event.csv"/>
+
     </changeSet>
 </databaseChangeLog>
