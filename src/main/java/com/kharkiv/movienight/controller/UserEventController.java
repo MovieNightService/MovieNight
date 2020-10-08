@@ -4,6 +4,7 @@ import com.kharkiv.movienight.service.userevent.UserEventService;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventOutcomeDto;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,14 @@ public class UserEventController {
 
     @PostMapping
     @PreAuthorize(value = "hasAuthority('USER')")
+    @ApiOperation(value = "createUserEvent", nickname = "createUserEvent")
     public Long create(@Valid @RequestBody UserEventCreateDto dto){
         return userEventService.create(dto);
     }
 
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+    @ApiOperation(value = "findAllUserEvents", nickname = "findAllUserEvents")
     public List<UserEventOutcomeDto> findAll(){
         return userEventService.findAll();
     }

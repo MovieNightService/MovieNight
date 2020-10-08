@@ -19,7 +19,7 @@ public abstract class UserMapper implements ActorService {
     @Mapping(target = "createdBy", source = "user.createdBy.id")
     @Mapping(target = "updatedBy", source = "user.updatedBy.id")
     @Mapping(target = "roles", expression = "java((List<UserRole>) user.getAuthorities())")
-    public abstract UserOutcomeDto toOutcomeDto(User user);
+    public abstract UserOutcomeDto toDto(User user);
 
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
     @Mapping(target = "updatedAt", expression = "java(Instant.now())")

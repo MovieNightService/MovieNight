@@ -29,8 +29,9 @@ public class UserEventServiceImpl implements UserEventService {
 
     @Override
     public List<UserEventOutcomeDto> findAll() {
-        return userEventRepository.findAll().stream()
-                .map(userEventMapper::toOutcomeDto)
-                .collect(Collectors.toList());
+//        return userEventRepository.findAll().stream()
+//                .map(userEventMapper::toOutcomeDto)
+//                .collect(Collectors.toList());
+        return null; // TODO: 08.10.2020  
     }
 }

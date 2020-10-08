@@ -3,6 +3,7 @@ package com.kharkiv.movienight.controller;
 import com.kharkiv.movienight.service.movie.MovieService;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ public class MovieController {
 
     @PostMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
+    @ApiOperation(value = "createMovie", nickname = "createMovie")
     public Long create(@Valid @RequestBody MovieCreateDto dto){
         return movieService.create(dto);
     }

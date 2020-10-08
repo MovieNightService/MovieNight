@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserOutcomeDto getUser(Principal principal) {
         User user = findByUsernameAndDeletedFalse(principal.getName());
-        return userMapper.toOutcomeDto(user);
+        return userMapper.toDto(user);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserOutcomeDto> findAll() {
         return userRepository.findAll().stream()
-                .map(userMapper::toOutcomeDto)
+                .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
 

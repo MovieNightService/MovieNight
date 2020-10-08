@@ -1,16 +1,12 @@
 package com.kharkiv.movienight.persistence.model.movie;
 
-import com.kharkiv.movienight.persistence.model.event.Event;
 import com.kharkiv.movienight.persistence.model.general.IdCreatedUpdatedDeletedEntity;
-import com.kharkiv.movienight.persistence.model.user.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,19 +16,12 @@ import java.util.Set;
 public class Movie extends IdCreatedUpdatedDeletedEntity {
 
     private String name;
-
     private Integer duration;
-
     private Instant issue;
-
     private Double rating;
-
     private String language;
-
     private String description;
-
     private String trailer;
-
     private Integer age;
 
     @ElementCollection(targetClass = Genre.class, fetch = FetchType.EAGER)

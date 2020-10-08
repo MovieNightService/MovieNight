@@ -20,4 +20,8 @@ public class MovieOutcomeDto {
     private String trailer;
     private Integer age;
     private Set<Genre> genre;
+    private Long createdBy;
+    private Instant createdAt;
+    private Long updatedBy;
+    private Instant updatedAt;
 }
