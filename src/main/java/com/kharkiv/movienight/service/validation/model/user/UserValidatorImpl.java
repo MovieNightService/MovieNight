@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.validation.model;
+package com.kharkiv.movienight.service.validation.model.user;
 
 import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.standard.ForbiddenException;

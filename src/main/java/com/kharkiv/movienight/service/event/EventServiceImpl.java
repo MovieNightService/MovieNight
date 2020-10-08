@@ -3,6 +3,8 @@ package com.kharkiv.movienight.service.event;
 import com.kharkiv.movienight.exception.event.EventNotFoundException;
 import com.kharkiv.movienight.persistence.model.event.Event;
 import com.kharkiv.movienight.persistence.repository.EventRepository;
+import com.kharkiv.movienight.service.validation.type.MethodType;
+import com.kharkiv.movienight.service.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
 import com.kharkiv.movienight.transport.dto.event.EventOutcomeDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
@@ -22,31 +24,34 @@ public class EventServiceImpl implements EventService {
 
     private EventRepository eventRepository;
     private EventMapper eventMapper;
+    private Validator<Event> validator;
 
     @Override
     public Long create(EventCreateDto dto) {
         Event event = eventMapper.toEntity(dto);
 
-        //        validator.validate(MethodType.DELETE, user);
+        validator.validate(MethodType.CREATE, dto);
 
         return eventRepository.save(event).getId();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Event findByIdAndDeletedFalse(Long id) {
         return eventRepository.findByIdAndDeletedFalse(id).orElseThrow(EventNotFoundException::new);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventOutcomeDto findById(Long id) {
         return eventMapper.toDto(eventRepository.findByIdAndDeletedFalse(id).orElseThrow(EventNotFoundException::new));
     }
 
     @Override
-    public Long delete(Long id){
+    public Long delete(Long id) {
         Event event = findByIdAndDeletedFalse(id);
 
-//        validator.validate(MethodType.DELETE, user);
+        validator.validate(MethodType.DELETE, event);
 
         event.setDeleted(true);
         return event.getId();
@@ -56,13 +61,14 @@ public class EventServiceImpl implements EventService {
     public Long restore(Long id) {
         Event event = findByIdAndDeletedTrue(id);
 
-//        validator.validate(MethodType.DELETE, user);
+        validator.validate(MethodType.RESTORE, event);
 
         event.setDeleted(false);
         return event.getId();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventOutcomeDto> findAll() {
         return eventRepository.findAll().stream()
                 .map(eventMapper::toDto)
@@ -73,7 +79,7 @@ public class EventServiceImpl implements EventService {
     public Long update(Long id, EventUpdateDto dto) {
         Event event = findByIdAndDeletedFalse(id);
 
-//        validator.validate(MethodType.UPDATE, dto, user);
+        validator.validate(MethodType.UPDATE, dto, event);
 
         return eventMapper.toEntity(dto, event).getId();
     }
