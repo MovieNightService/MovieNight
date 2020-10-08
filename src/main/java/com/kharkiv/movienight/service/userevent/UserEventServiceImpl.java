@@ -24,6 +24,9 @@ public class UserEventServiceImpl implements UserEventService {
     @Override
     public Long create(UserEventCreateDto dto) {
         UserEvent userEvent = userEventMapper.toEntity(dto);
+
+        userEvent.setUser(getActorFromContext());
+
         return userEventRepository.save(userEvent).getId();
     }
 

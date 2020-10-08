@@ -50,10 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long registration(UserRegistrationDto dto) {
+        User actor = getActorFromContext();
         User user = userMapper.toEntity(dto);
 
         validator.validate(MethodType.REGISTRATION, dto, user);
 
+        user.setCreatedBy(actor);
+        user.setUpdatedBy(actor);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setAuthorities(Collections.singletonList(UserRole.USER));
 

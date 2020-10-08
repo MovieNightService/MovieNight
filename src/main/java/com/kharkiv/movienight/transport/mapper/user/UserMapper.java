@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Mapper(imports = {Instant.class, UserRole.class, List.class})
-public abstract class UserMapper implements ActorService {
+public abstract class UserMapper {
 
     @Mapping(target = "createdBy", source = "user.createdBy.id")
     @Mapping(target = "updatedBy", source = "user.updatedBy.id")
@@ -23,8 +23,6 @@ public abstract class UserMapper implements ActorService {
 
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
     @Mapping(target = "updatedAt", expression = "java(Instant.now())")
-    @Mapping(target = "createdBy", expression = "java(getActorFromContext())")
-    @Mapping(target = "updatedBy", expression = "java(getActorFromContext())")
     public abstract User toEntity(UserRegistrationDto dto);
 
     public abstract User toEntity(UserUpdateDto dto, @MappingTarget User user);

@@ -2,6 +2,7 @@ package com.kharkiv.movienight.service.event;
 
 import com.kharkiv.movienight.exception.event.EventNotFoundException;
 import com.kharkiv.movienight.persistence.model.event.Event;
+import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.EventRepository;
 import com.kharkiv.movienight.service.validation.type.MethodType;
 import com.kharkiv.movienight.service.validation.validator.Validator;
@@ -28,9 +29,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Long create(EventCreateDto dto) {
+        User actor = getActorFromContext();
         Event event = eventMapper.toEntity(dto);
 
         validator.validate(MethodType.CREATE, dto);
+
+        event.setCreatedBy(actor);
+        event.setUpdatedBy(actor);
+        event.setUser(actor);
 
         return eventRepository.save(event).getId();
     }

@@ -1,6 +1,5 @@
 package com.kharkiv.movienight.transport.dto.user;
 
-import com.kharkiv.movienight.persistence.model.user.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,8 +35,6 @@ public class UserRegistrationDto {
     @Email
     @NotNull
     private String email;
-
-    private byte[] avatar;
 
     @NotBlank
     @NotNull

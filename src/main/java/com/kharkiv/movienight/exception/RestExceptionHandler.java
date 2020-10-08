@@ -3,10 +3,8 @@ package com.kharkiv.movienight.exception;
 import com.kharkiv.movienight.exception.event.EventNotFoundException;
 import com.kharkiv.movienight.exception.movie.MovieNotFoundException;
 import com.kharkiv.movienight.exception.user.*;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -66,6 +64,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity<Object> handleEventNotFoundException(EventNotFoundException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UploadAvatarException.class)
+    public ResponseEntity<Object> handleUploadAvatarException(UploadAvatarException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 

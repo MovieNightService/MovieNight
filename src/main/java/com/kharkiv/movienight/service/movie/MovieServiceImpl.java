@@ -2,6 +2,7 @@ package com.kharkiv.movienight.service.movie;
 
 import com.kharkiv.movienight.exception.movie.MovieNotFoundException;
 import com.kharkiv.movienight.persistence.model.movie.Movie;
+import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.MovieRepository;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
 import com.kharkiv.movienight.transport.mapper.movie.MovieMapper;
@@ -26,7 +27,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Long create(MovieCreateDto dto) {
+        User actor = getActorFromContext();
         Movie movie = movieMapper.toEntity(dto);
+
+        movie.setCreatedBy(actor);
+        movie.setUpdatedBy(actor);
+
         return movieRepository.save(movie).getId();
     }
 }

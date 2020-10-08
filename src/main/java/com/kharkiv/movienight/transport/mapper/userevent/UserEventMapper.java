@@ -11,15 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
 @Setter(onMethod_ = @Autowired)
-public abstract class UserEventMapper implements ActorService {
+public abstract class UserEventMapper {
 
     protected EventService eventService;
 
     @Mapping(target = "event", expression = "java(eventService.findByIdAndDeletedFalse(dto.getEventId()))")
-    @Mapping(target = "user", expression = "java(getActorFromContext())")
     public abstract UserEvent toEntity(UserEventCreateDto dto);
 
-//    @Mapping(target = "user.createdBy", source = "user.createdBy.id")
-//    @Mapping(target = "user.updatedBy", source = "user.updatedBy.id")
-//    public abstract UserEventOutcomeDto toOutcomeDto(UserEvent userEvent);
 }

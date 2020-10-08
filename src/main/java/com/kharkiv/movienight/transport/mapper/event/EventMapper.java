@@ -19,7 +19,7 @@ import java.time.Instant;
 
 @Mapper(imports = {Instant.class})
 @Setter(onMethod_ = @Autowired)
-public abstract class EventMapper implements ActorService {
+public abstract class EventMapper {
 
     protected UserService userService;
     protected MovieService movieService;
@@ -27,11 +27,8 @@ public abstract class EventMapper implements ActorService {
     protected MovieMapper movieMapper;
 
     @Mapping(target = "movie", expression = "java(movieService.findByIdAndDeletedFalse(dto.getMovieId()))")
-    @Mapping(target = "user", expression = "java(getActorFromContext())")
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
     @Mapping(target = "updatedAt", expression = "java(Instant.now())")
-    @Mapping(target = "createdBy", expression = "java(getActorFromContext())")
-    @Mapping(target = "updatedBy", expression = "java(getActorFromContext())")
     public abstract Event toEntity(EventCreateDto dto);
 
     @Mapping(target = "movie", expression = "java(movieMapper.toDto(event.getMovie()))")
