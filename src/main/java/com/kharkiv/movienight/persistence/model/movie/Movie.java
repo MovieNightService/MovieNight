@@ -1,6 +1,7 @@
 package com.kharkiv.movienight.persistence.model.movie;
 
 import com.kharkiv.movienight.persistence.model.general.IdCreatedUpdatedDeletedEntity;
+import com.kharkiv.movienight.persistence.model.general.IdCreatedUpdatedEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "movies")
-public class Movie extends IdCreatedUpdatedDeletedEntity {
+public class Movie extends IdCreatedUpdatedEntity {
 
     private String name;
     private Integer duration;

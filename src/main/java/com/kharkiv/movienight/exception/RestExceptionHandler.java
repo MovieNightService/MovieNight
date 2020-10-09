@@ -1,7 +1,7 @@
 package com.kharkiv.movienight.exception;
 
 import com.kharkiv.movienight.exception.event.EventNotFoundException;
-import com.kharkiv.movienight.exception.movie.MovieNotFoundException;
+import com.kharkiv.movienight.exception.movie.*;
 import com.kharkiv.movienight.exception.user.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -66,6 +66,31 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity<Object> handleEventNotFoundException(EventNotFoundException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MovieDurationException.class)
+    public ResponseEntity<Object> movieDurationException(MovieDurationException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MovieIssueInvalidException.class)
+    public ResponseEntity<Object> movieIssueInvalidException(MovieIssueInvalidException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MovieRatingException.class)
+    public ResponseEntity<Object> movieRatingException(MovieRatingException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MovieTrailerUrlException.class)
+    public ResponseEntity<Object> movieTrailerUrlException(MovieTrailerUrlException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MovieWithSuchNameAlreadyExistsException.class)
+    public ResponseEntity<Object> movieWithSuchNameAlreadyExistsException(MovieWithSuchNameAlreadyExistsException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 

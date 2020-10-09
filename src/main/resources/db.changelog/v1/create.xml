@@ -80,9 +80,6 @@
             <column name="updated_at" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="deleted" type="boolean" defaultValue="false">
-                <constraints nullable="false"/>
-            </column>
             <column name="name" type="varchar(255)"/>
             <column name="duration" type="int"/>
             <column name="issue" type="timestamp"/>

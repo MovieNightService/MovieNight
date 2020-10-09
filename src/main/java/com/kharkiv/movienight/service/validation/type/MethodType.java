@@ -1,6 +1,7 @@
 package com.kharkiv.movienight.service.validation.type;
 
 public enum  MethodType {
+    CREATE,
     REGISTRATION,
     UPDATE,
     DELETE,

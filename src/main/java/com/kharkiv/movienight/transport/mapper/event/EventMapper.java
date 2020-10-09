@@ -26,7 +26,7 @@ public abstract class EventMapper implements ActorService {
     protected UserMapper userMapper;
     protected MovieMapper movieMapper;
 
-    @Mapping(target = "movie", expression = "java(movieService.findByIdAndDeletedFalse(dto.getMovieId()))")
+    @Mapping(target = "movie", expression = "java(movieService.findById(dto.getMovieId()))")
     @Mapping(target = "user", expression = "java(getActorFromContext())")
     @Mapping(target = "createdAt", expression = "java(Instant.now())")
     @Mapping(target = "updatedAt", expression = "java(Instant.now())")

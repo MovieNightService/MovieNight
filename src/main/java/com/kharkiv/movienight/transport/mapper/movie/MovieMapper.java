@@ -4,9 +4,11 @@ import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.service.actor.ActorService;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
+import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
 import lombok.Setter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
@@ -24,4 +26,6 @@ public abstract class MovieMapper implements ActorService {
     @Mapping(target = "createdBy", source = "movie.createdBy.id")
     @Mapping(target = "updatedBy", source = "movie.updatedBy.id")
     public abstract MovieOutcomeDto toDto(Movie movie);
+
+    public abstract Movie toEntity(MovieUpdateDto dto, @MappingTarget Movie movie);
 }
