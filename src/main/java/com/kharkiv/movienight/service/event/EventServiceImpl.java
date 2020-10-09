@@ -32,7 +32,7 @@ public class EventServiceImpl implements EventService {
         User actor = getActorFromContext();
         Event event = eventMapper.toEntity(dto);
 
-        validator.validate(MethodType.CREATE, dto);
+        validator.validate(MethodType.CREATE, dto, actor);
 
         event.setCreatedBy(actor);
         event.setUpdatedBy(actor);
