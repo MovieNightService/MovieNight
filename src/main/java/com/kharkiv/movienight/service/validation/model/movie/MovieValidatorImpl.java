@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.validation.model;
+package com.kharkiv.movienight.service.validation.model.movie;
 
 import com.kharkiv.movienight.exception.movie.*;
 import com.kharkiv.movienight.exception.standard.BadRequestException;
@@ -142,6 +142,7 @@ public class MovieValidatorImpl implements Validator<Movie> {
     }
 
     private void validateAge(Integer age) {
+        // TODO: 10/10/20  age may be different It depend on a film and why here is MovieDurationException
         if(age != null && (age <= 0 || age > 21)) {
             throw new MovieDurationException();
         }

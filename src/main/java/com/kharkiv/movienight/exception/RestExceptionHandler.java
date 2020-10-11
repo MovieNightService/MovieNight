@@ -69,32 +69,32 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UploadAvatarException.class)
     public ResponseEntity<Object> handleUploadAvatarException(UploadAvatarException exception, WebRequest request) {
-        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieDurationException.class)
     public ResponseEntity<Object> movieDurationException(MovieDurationException exception, WebRequest request) {
-        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieIssueInvalidException.class)
     public ResponseEntity<Object> movieIssueInvalidException(MovieIssueInvalidException exception, WebRequest request) {
-        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieRatingException.class)
     public ResponseEntity<Object> movieRatingException(MovieRatingException exception, WebRequest request) {
-        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieTrailerUrlException.class)
     public ResponseEntity<Object> movieTrailerUrlException(MovieTrailerUrlException exception, WebRequest request) {
-        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieWithSuchNameAlreadyExistsException.class)
     public ResponseEntity<Object> movieWithSuchNameAlreadyExistsException(MovieWithSuchNameAlreadyExistsException exception, WebRequest request) {
-        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<Object> getObjectResponseEntity(WebRequest request, String message, HttpStatus status) {
