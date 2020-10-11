@@ -25,7 +25,6 @@ public class MovieValidatorImpl implements Validator<Movie> {
 
     @Override
     public void validate(MethodType methodType, Object... objects) {
-        User actor = getActorFromContext();
         Object dto;
         Object object;
         Movie movie = null;
@@ -36,7 +35,7 @@ public class MovieValidatorImpl implements Validator<Movie> {
             if (object instanceof Movie) {
                 movie = (Movie) object;
             }
-            executeValidation(methodType, actor, null, movie);
+            executeValidation(methodType, null, movie);
 
         } else if (objects.length == 2) {
             dto = objects[0];
@@ -45,14 +44,14 @@ public class MovieValidatorImpl implements Validator<Movie> {
             if (object instanceof Movie) {
                 movie = (Movie) object;
             }
-            executeValidation(methodType, actor, dto, movie);
+            executeValidation(methodType, dto, movie);
 
         } else {
-            executeValidation(methodType, actor, null, null);
+            executeValidation(methodType,null, null);
         }
     }
 
-    public void executeValidation(MethodType methodType, User actor, Object dto, Movie movie) {
+    public void executeValidation(MethodType methodType, Object dto, Movie movie) {
         switch (methodType) {
             case CREATE:
                 validateCreate(dto);

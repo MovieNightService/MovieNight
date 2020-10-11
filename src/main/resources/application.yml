@@ -6,6 +6,19 @@ server:
 spring:
   application:
     name: com.kharkiv.movienight
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
   jpa:
     hibernate:
       ddl-auto: validate

@@ -13,6 +13,14 @@ compileJava {
     ]
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/generated/main/java'
+        }
+    }
+}
+
 group 'com.movienight'
 version '1.0-SNAPSHOT'
 
@@ -30,7 +38,6 @@ dependencies {
     implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
     implementation "org.postgresql:postgresql"
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     implementation "io.springfox:springfox-swagger2:${springFoxVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springFoxVersion}"
@@ -39,6 +46,8 @@ dependencies {
 
     compile 'org.projectlombok:lombok'
     compile 'org.hibernate:hibernate-validator:6.0.13.Final'
+
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '2.2.3.RELEASE'
 
     annotationProcessor('org.projectlombok:lombok')
     annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")

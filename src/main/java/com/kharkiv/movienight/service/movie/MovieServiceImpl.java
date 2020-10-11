@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,13 +30,12 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Long create(MovieCreateDto dto) {
         User actor = getActorFromContext();
-        Movie movie = movieMapper.toEntity(dto);
 
+        validator.validate(MethodType.CREATE, dto);
+
+        Movie movie = movieMapper.toEntity(dto);
         movie.setCreatedBy(actor);
         movie.setUpdatedBy(actor);
-
-
-        validator.validate(MethodType.CREATE, dto, movie);
 
         return movieRepository.save(movie).getId();
     }
