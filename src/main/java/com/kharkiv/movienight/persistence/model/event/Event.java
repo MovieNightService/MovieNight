@@ -26,4 +26,9 @@ public class Event extends IdCreatedUpdatedDeletedEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user; // manager of event (not viewer)
+
+    @Override
+    public String toString() {
+        return "Event: " + name + ", date: " + date;
+    }
 }

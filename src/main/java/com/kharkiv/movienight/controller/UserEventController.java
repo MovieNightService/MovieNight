@@ -1,5 +1,6 @@
 package com.kharkiv.movienight.controller;
 
+import com.kharkiv.movienight.service.pdf.TicketBuilder;
 import com.kharkiv.movienight.service.userevent.UserEventService;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventOutcomeDto;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserEventController {
 
     private final UserEventService userEventService;
+    private final TicketBuilder ticketBuilder;
 
     @PostMapping
     @PreAuthorize(value = "hasAuthority('USER')")
@@ -39,5 +41,12 @@ public class UserEventController {
     @ApiOperation(value = "deleteUserEvent", nickname = "deleteUserEvent")
     public Long delete(Long id){
         return userEventService.delete(id);
+    }
+
+    @GetMapping("/ticket/{eventId}/pdf")
+    @PreAuthorize(value = "hasAnyAuthority('USER')")
+    @ApiOperation(value = "buildTicket", nickname = "buildTicket")
+    public void buildTicket(@PathVariable Long eventId){
+        ticketBuilder.buildPDF(eventId);
     }
 }
