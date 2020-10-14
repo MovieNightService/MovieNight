@@ -19,6 +19,7 @@ public abstract class MovieMapper {
 
     @Mapping(target = "createdBy", source = "movie.createdBy.id")
     @Mapping(target = "updatedBy", source = "movie.updatedBy.id")
+    @Mapping(target = "id", source = "movie.id")
     public abstract MovieOutcomeDto toDto(Movie movie);
 
     public abstract Movie toEntity(MovieUpdateDto dto, @MappingTarget Movie movie);

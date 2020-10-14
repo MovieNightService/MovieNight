@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 public class UserOutcomeDto {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;

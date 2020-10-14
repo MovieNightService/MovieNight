@@ -35,6 +35,7 @@ public abstract class EventMapper {
     @Mapping(target = "user", expression = "java(userMapper.toDto(event.getUser()))")
     @Mapping(target = "createdBy", source = "event.createdBy.id")
     @Mapping(target = "updatedBy", source = "event.updatedBy.id")
+    @Mapping(target = "id", source = "event.id")
     public abstract EventOutcomeDto toDto(Event event);
 
     public abstract Event toEntity(EventUpdateDto dto, @MappingTarget Event event);

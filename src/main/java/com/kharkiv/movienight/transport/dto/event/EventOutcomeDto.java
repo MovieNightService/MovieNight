@@ -11,6 +11,7 @@ import java.time.Instant;
 @Setter
 public class EventOutcomeDto {
 
+    private Long id;
     private String name;
     private Instant date;
     private MovieOutcomeDto movie;

@@ -23,6 +23,7 @@ public abstract class UserMapper {
     @Mapping(target = "createdBy", source = "user.createdBy.id")
     @Mapping(target = "updatedBy", source = "user.updatedBy.id")
     @Mapping(target = "roles", expression = "java(getUserRoleListByAuthorities(user.getAuthorities()))")
+    @Mapping(target = "id", source = "user.id")
     public abstract UserOutcomeDto toDto(User user);
 
     @Mapping(target = "createdAt", expression = "java(Instant.now())")

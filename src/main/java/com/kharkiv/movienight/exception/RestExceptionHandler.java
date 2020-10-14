@@ -3,6 +3,7 @@ package com.kharkiv.movienight.exception;
 import com.kharkiv.movienight.exception.event.EventNotFoundException;
 import com.kharkiv.movienight.exception.movie.*;
 import com.kharkiv.movienight.exception.user.*;
+import com.kharkiv.movienight.exception.userevent.UserEventNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -73,27 +74,32 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(MovieDurationException.class)
-    public ResponseEntity<Object> movieDurationException(MovieDurationException exception, WebRequest request) {
+    public ResponseEntity<Object> handleMovieDurationException(MovieDurationException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieIssueInvalidException.class)
-    public ResponseEntity<Object> movieIssueInvalidException(MovieIssueInvalidException exception, WebRequest request) {
+    public ResponseEntity<Object> handleMovieIssueInvalidException(MovieIssueInvalidException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieRatingException.class)
-    public ResponseEntity<Object> movieRatingException(MovieRatingException exception, WebRequest request) {
+    public ResponseEntity<Object> handleMovieRatingException(MovieRatingException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieTrailerUrlException.class)
-    public ResponseEntity<Object> movieTrailerUrlException(MovieTrailerUrlException exception, WebRequest request) {
+    public ResponseEntity<Object> handleMovieTrailerUrlException(MovieTrailerUrlException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MovieWithSuchNameAlreadyExistsException.class)
-    public ResponseEntity<Object> movieWithSuchNameAlreadyExistsException(MovieWithSuchNameAlreadyExistsException exception, WebRequest request) {
+    public ResponseEntity<Object> handleMovieWithSuchNameAlreadyExistsException(MovieWithSuchNameAlreadyExistsException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserEventNotFoundException.class)
+    public ResponseEntity<Object> handleUserEventNotFoundException(UserEventNotFoundException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 

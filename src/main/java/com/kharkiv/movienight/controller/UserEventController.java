@@ -33,4 +33,11 @@ public class UserEventController {
     public List<UserEventOutcomeDto> findAll(){
         return userEventService.findAll();
     }
+
+    @DeleteMapping
+    @PreAuthorize(value = "hasAnyAuthority('MANAGER', 'USER')")
+    @ApiOperation(value = "deleteUserEvent", nickname = "deleteUserEvent")
+    public Long delete(Long id){
+        return userEventService.delete(id);
+    }
 }

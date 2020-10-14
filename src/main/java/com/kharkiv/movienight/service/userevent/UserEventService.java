@@ -11,4 +11,6 @@ public interface UserEventService extends ActorService {
     Long create(UserEventCreateDto dto);
 
     List<UserEventOutcomeDto> findAll();
+
+    Long delete(Long id);
 }

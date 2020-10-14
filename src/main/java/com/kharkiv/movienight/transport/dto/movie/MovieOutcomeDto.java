@@ -11,6 +11,7 @@ import java.util.Set;
 @Setter
 public class MovieOutcomeDto {
 
+    private Long id;
     private String name;
     private Integer duration;
     private Instant issue;

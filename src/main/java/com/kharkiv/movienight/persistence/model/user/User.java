@@ -8,8 +8,12 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,9 +55,6 @@ public class User extends IdCreatedUpdatedDeletedEntity implements UserDetails  
     @CollectionTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"))
     private List<UserRole> authorities = new ArrayList<>();
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-//    private List<Event> events = new ArrayList<>();
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
@@ -87,5 +88,12 @@ public class User extends IdCreatedUpdatedDeletedEntity implements UserDetails  
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public int getAge(){
+        LocalDate currentDate = LocalDate.ofInstant(Instant.now(), ZoneOffset.UTC);
+        LocalDate dateOfBirth = LocalDate.ofInstant(this.dateOfBirth,  ZoneOffset.UTC);
+
+        return Period.between(dateOfBirth, currentDate).getYears();
     }
 }
