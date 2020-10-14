@@ -2,6 +2,7 @@ package com.kharkiv.movienight.exception;
 
 import com.kharkiv.movienight.exception.event.EventNotFoundException;
 import com.kharkiv.movienight.exception.movie.*;
+import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.user.*;
 import com.kharkiv.movienight.exception.userevent.UserEventNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -100,6 +101,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserEventNotFoundException.class)
     public ResponseEntity<Object> handleUserEventNotFoundException(UserEventNotFoundException exception, WebRequest request) {
+        return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<Object> handleBadRequestException(BadRequestException exception, WebRequest request) {
         return getObjectResponseEntity(request, exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
