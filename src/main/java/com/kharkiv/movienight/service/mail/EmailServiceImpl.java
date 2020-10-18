@@ -2,10 +2,12 @@ package com.kharkiv.movienight.service.mail;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kharkiv.movienight.transport.dto.mail.EmailBuyTicketDto;
 import com.kharkiv.movienight.transport.dto.mail.EmailTemplateDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +17,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +51,16 @@ public class EmailServiceImpl implements EmailService {
             message.setSubject(dto.getSubject());
             message.setTo(dto.getRecipient());
             message.setText(buildContent(dto), true);
+
+            // TODO: 10/18/20 very bad implementation bellow block
+            if(dto instanceof EmailBuyTicketDto) {
+                EmailBuyTicketDto buyTicketDto = (EmailBuyTicketDto) dto;
+                String fileName = buyTicketDto.getUserName() + " " + buyTicketDto.getEventName() + ".pdf";
+                FileSystemResource file = new FileSystemResource(new File(buyTicketDto.getTicketPath() + fileName));
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+                helper.addAttachment(fileName, file);
+                helper.setText(buildContent(dto), true);
+            }
 
             emailSender.send(mimeMessage);
 

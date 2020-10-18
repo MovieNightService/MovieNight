@@ -1,6 +1,5 @@
 package com.kharkiv.movienight.persistence.model.user;
 
-//import com.kharkiv.movienight.persistence.model.event.Event;
 import com.kharkiv.movienight.persistence.model.general.IdCreatedUpdatedDeletedEntity;
 //import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import lombok.Getter;

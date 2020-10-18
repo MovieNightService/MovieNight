@@ -69,9 +69,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setAuthorities(Collections.singletonList(UserRole.USER));
 
-        EmailRegistrationDto dtoTemplate = new EmailRegistrationDto(dto.getFirstName() + " " + dto.getLastName() + "!", dto.getEmail(), "Registration", "notificationRegistrationEmail");
-        emailService.sendEmailByTemplate(dtoTemplate);
-
         return userRepository.save(user).getId();
     }
 

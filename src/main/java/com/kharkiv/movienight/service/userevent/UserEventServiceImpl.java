@@ -3,6 +3,7 @@ package com.kharkiv.movienight.service.userevent;
 import com.kharkiv.movienight.exception.userevent.UserEventNotFoundException;
 import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
+import com.kharkiv.movienight.service.ticket.TicketService;
 import com.kharkiv.movienight.service.validation.type.MethodType;
 import com.kharkiv.movienight.service.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
@@ -24,6 +25,7 @@ public class UserEventServiceImpl implements UserEventService {
     private UserEventRepository userEventRepository;
     private UserEventMapper userEventMapper;
     private Validator<UserEvent> validator;
+    private TicketService ticketService;
 
     @Override
     public Long create(UserEventCreateDto dto) {
@@ -32,6 +34,7 @@ public class UserEventServiceImpl implements UserEventService {
 
         validator.validate(MethodType.CREATE, dto, userEvent);
 
+        ticketService.create(userEvent);
         return userEventRepository.save(userEvent).getId();
     }
 
@@ -46,14 +49,14 @@ public class UserEventServiceImpl implements UserEventService {
     public Long delete(Long id) {
         UserEvent userEvent = findById(id);
 
-        validator.validate(MethodType.CREATE, userEvent);
+        validator.validate(MethodType.DELETE, userEvent);
 
         userEventRepository.delete(userEvent);
 
         return userEvent.getId();
     }
 
-    private UserEvent findById(Long id){
+    private UserEvent findById(Long id) {
         return userEventRepository.findById(id).orElseThrow(UserEventNotFoundException::new);
     }
 }
