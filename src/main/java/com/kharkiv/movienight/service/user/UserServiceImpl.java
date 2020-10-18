@@ -5,16 +5,21 @@ import com.kharkiv.movienight.exception.user.UserNotFoundException;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
+import com.kharkiv.movienight.service.mail.EmailService;
 import com.kharkiv.movienight.service.validation.type.MethodType;
 import com.kharkiv.movienight.service.validation.validator.Validator;
+import com.kharkiv.movienight.transport.dto.mail.EmailRegistrationDto;
+import com.kharkiv.movienight.transport.dto.mail.EmailTemplateDto;
 import com.kharkiv.movienight.transport.dto.user.*;
 import com.kharkiv.movienight.transport.mapper.user.UserMapper;
+import liquibase.pro.packaged.E;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Email;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
@@ -29,12 +34,14 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final Validator<User> validator;
+    private final EmailService emailService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, Validator<User> validator) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, Validator<User> validator, EmailService emailService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.validator = validator;
+        this.emailService = emailService;
     }
 
     @Override
@@ -50,15 +57,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long registration(UserRegistrationDto dto) {
-        User actor = getActorFromContext();
         User user = userMapper.toEntity(dto);
 
         validator.validate(MethodType.REGISTRATION, dto, user);
+
+        User actor = new User();
+        actor.setId(1L);
 
         user.setCreatedBy(actor);
         user.setUpdatedBy(actor);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setAuthorities(Collections.singletonList(UserRole.USER));
+
+        EmailRegistrationDto dtoTemplate = new EmailRegistrationDto(dto.getFirstName() + " " + dto.getLastName() + "!", dto.getEmail(), "Registration", "notificationRegistrationEmail");
+        emailService.sendEmailByTemplate(dtoTemplate);
 
         return userRepository.save(user).getId();
     }

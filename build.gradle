@@ -37,7 +37,6 @@ dependencies {
     implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
     implementation "org.postgresql:postgresql"
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
     implementation "io.springfox:springfox-swagger2:${springFoxVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springFoxVersion}"
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
@@ -51,6 +50,10 @@ dependencies {
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
 //    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '2.2.5.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-mail:2.2.5.RELEASE'
+    compile 'org.springframework:spring-context-support:5.2.5.RELEASE'
+
+    //    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '2.2.5.RELEASE'
 
     annotationProcessor('org.projectlombok:lombok')
     annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
