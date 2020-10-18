@@ -11,13 +11,16 @@ public interface ActorService {
     default User getActorFromContext() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
-            return null;
-        }
+        if (authentication != null) {
+            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ANONYMOUS"))) {
+                return null;
+            }
 
-        return ApplicationContextProvider.getApplicationContext()
-                .getBean(UserService.class)
-                .findById(((User) authentication.getPrincipal()).getId());
+            return ApplicationContextProvider.getApplicationContext()
+                    .getBean(UserService.class)
+                    .findById(((User) authentication.getPrincipal()).getId());
+        }
+        return null;
     }
 }
 

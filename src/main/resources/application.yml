@@ -19,6 +19,17 @@ spring:
               - PUT
               - DELETE
               - OPTIONS
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: movienightukraine@gmail.com
+    password: MNstartup2020
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   jpa:
     hibernate:
       ddl-auto: validate
