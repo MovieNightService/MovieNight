@@ -83,6 +83,7 @@ public class UserEventValidatorImpl implements Validator<UserEvent> {
             Event event = eventService.findByIdAndDeletedFalse(createDto.getEventId());
             validateAge(event, actor);
             validateExistsByEvent(event, actor);
+            validateEvent(event, actor);
         } else {
             throw new BadRequestException("DTO was not get or his type is incorrect");
         }
@@ -99,6 +100,12 @@ public class UserEventValidatorImpl implements Validator<UserEvent> {
 
         if(actor.getAge() < age){
             throw new BadRequestException("Your age must be more than " + age);
+        }
+    }
+
+    private void validateEvent(Event event, User actor) {
+        if (userEventRepository.existsByEventAndUser(event, actor)) {
+            throw new BadRequestException("You already have a ticket for this event");
         }
     }
 }

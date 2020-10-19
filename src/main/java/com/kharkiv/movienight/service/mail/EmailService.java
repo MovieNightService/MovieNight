@@ -8,5 +8,5 @@ public interface EmailService {
     void sendMessage(EmailTemplateDto dto);
 
     @Async
-    void sendEmailByTemplate(EmailTemplateDto dto);
+    void sendMessageByTemplate(EmailTemplateDto dto);
 }

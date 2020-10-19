@@ -9,6 +9,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -29,6 +33,9 @@ public class Event extends IdCreatedUpdatedDeletedEntity {
 
     @Override
     public String toString() {
-        return "Event: " + name + ", date: " + date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                .withLocale(Locale.UK)
+                .withZone(ZoneId.systemDefault());
+        return "Event: " + name + ", date: " + formatter.format(date);
     }
 }

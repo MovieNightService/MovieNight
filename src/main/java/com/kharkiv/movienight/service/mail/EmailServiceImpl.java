@@ -2,11 +2,10 @@ package com.kharkiv.movienight.service.mail;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kharkiv.movienight.transport.dto.mail.EmailBuyTicketDto;
+import com.kharkiv.movienight.transport.dto.mail.EmailTicketDto;
 import com.kharkiv.movienight.transport.dto.mail.EmailTemplateDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Async
     @Override
-    public void sendEmailByTemplate(EmailTemplateDto dto) {
+    public void sendMessageByTemplate(EmailTemplateDto dto) {
         try {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
@@ -52,20 +52,24 @@ public class EmailServiceImpl implements EmailService {
             message.setTo(dto.getRecipient());
             message.setText(buildContent(dto), true);
 
-            // TODO: 10/18/20 very bad implementation bellow block
-            if(dto instanceof EmailBuyTicketDto) {
-                EmailBuyTicketDto buyTicketDto = (EmailBuyTicketDto) dto;
-                String fileName = buyTicketDto.getUserName() + " " + buyTicketDto.getEventName() + ".pdf";
-                FileSystemResource file = new FileSystemResource(new File(buyTicketDto.getTicketPath() + fileName));
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-                helper.addAttachment(fileName, file);
-                helper.setText(buildContent(dto), true);
-            }
-
+            buildAttachment(dto, mimeMessage);
             emailSender.send(mimeMessage);
 
         } catch (Exception exception) {
             exception.printStackTrace();
+        }
+    }
+
+    private void buildAttachment(EmailTemplateDto dto, MimeMessage mimeMessage) throws MessagingException {
+        if(dto instanceof EmailTicketDto) {
+
+            EmailTicketDto buyEmailTicketDto = (EmailTicketDto) dto;
+            String fileName = buyEmailTicketDto.getUserName() + " " + buyEmailTicketDto.getEventName() + ".pdf";
+            FileSystemResource file = new FileSystemResource(new File(buyEmailTicketDto.getTicketPath() + fileName));
+
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.addAttachment(fileName, file);
+            helper.setText(buildContent(dto), true);
         }
     }
 

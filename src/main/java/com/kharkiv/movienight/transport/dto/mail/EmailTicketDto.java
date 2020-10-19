@@ -1,6 +1,5 @@
 package com.kharkiv.movienight.transport.dto.mail;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,14 +7,14 @@ import java.time.Instant;
 
 @Getter
 @Setter
-public class EmailBuyTicketDto extends EmailTemplateDto {
+public class EmailTicketDto extends EmailTemplateDto {
 
     private String userName;
     private String eventName;
     private Instant eventDate;
     private String ticketPath;
 
-    public EmailBuyTicketDto(
+    public EmailTicketDto(
             String userName,
             String eventName,
             Instant eventDate,

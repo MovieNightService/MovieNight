@@ -16,7 +16,9 @@ import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
 import com.kharkiv.movienight.service.mail.EmailService;
-import com.kharkiv.movienight.transport.dto.mail.EmailBuyTicketDto;
+import com.kharkiv.movienight.service.validation.type.MethodType;
+import com.kharkiv.movienight.service.validation.validator.Validator;
+import com.kharkiv.movienight.transport.dto.mail.EmailTicketDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,7 @@ public class TicketServiceImpl implements TicketService {
 
     private UserEventRepository userEventRepository;
     private EmailService emailService;
+    private Validator<UserEvent> validator;
 
     @Override
     public void create(UserEvent userEvent) {
@@ -44,7 +47,7 @@ public class TicketServiceImpl implements TicketService {
         User user = userEvent.getUser();
         Event event = userEvent.getEvent();
 
-        EmailBuyTicketDto emailDto = new EmailBuyTicketDto(
+        EmailTicketDto emailDto = new EmailTicketDto(
                 user.getFirstName() + " " + user.getLastName(),
                 event.getName(),
                 event.getDate(),
@@ -54,18 +57,18 @@ public class TicketServiceImpl implements TicketService {
                 "emailNotificationBuyTicket"
         );
 
-        emailService.sendEmailByTemplate(emailDto);
+        emailService.sendMessageByTemplate(emailDto);
     }
 
     private void buildPDF(UserEvent userEvent) {
         Event event = userEvent.getEvent();
         User actor = getActorFromContext();
-        validateEvent(event, actor);
 
         Document document = new Document();
 
         String path = QR_PATH + actor.getId() + "_" + event.getId() + ".png";
         String text = "Secured by MovieNight team! Event: " + event.getName() + "! User: " + actor.getUsername();
+
         generateQRCodeImage(text, path);
 
         try {
@@ -85,6 +88,7 @@ public class TicketServiceImpl implements TicketService {
             document.add(new Paragraph(event.toString()));
             document.add(img);
             document.close();
+
             writer.close();
 
         } catch (DocumentException | IOException e) {
@@ -102,12 +106,6 @@ public class TicketServiceImpl implements TicketService {
 
         } catch (WriterException | IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void validateEvent(Event event, User actor) {
-        if (userEventRepository.existsByEventAndUser(event, actor)) {
-            throw new BadRequestException("You already have a ticket for this event");
         }
     }
 }

@@ -22,7 +22,7 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private static final String AUTH_SERVER = "http://localhost:8081/auth";
+    private static final String AUTH_SERVER = "http://localhost:8081";
     private static final String CLIENT_ID = "R2dpxQ3vPrtfgF72";
     private static final String CLIENT_SECRET = "fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9";
 
