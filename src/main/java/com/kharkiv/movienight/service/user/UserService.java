@@ -1,7 +1,7 @@
 package com.kharkiv.movienight.service.user;
 
 import com.kharkiv.movienight.persistence.model.user.User;
-import com.kharkiv.movienight.service.actor.ActorService;
+import com.kharkiv.movienight.service.utils.actor.ActorService;
 import com.kharkiv.movienight.transport.dto.user.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;

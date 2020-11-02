@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.mail;
+package com.kharkiv.movienight.service.utils.mail;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

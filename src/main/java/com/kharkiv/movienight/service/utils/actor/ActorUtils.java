@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.actor;
+package com.kharkiv.movienight.service.utils.actor;
 
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;

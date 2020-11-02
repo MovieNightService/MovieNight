@@ -1,6 +1,6 @@
 package com.kharkiv.movienight.service.userevent;
 
-import com.kharkiv.movienight.service.actor.ActorService;
+import com.kharkiv.movienight.service.utils.actor.ActorService;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventOutcomeDto;
 

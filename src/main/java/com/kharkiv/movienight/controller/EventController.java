@@ -2,6 +2,7 @@ package com.kharkiv.movienight.controller;
 
 import com.kharkiv.movienight.service.event.EventService;
 import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
+import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.event.EventOutcomeDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
 import io.swagger.annotations.Api;
@@ -52,12 +53,12 @@ public class EventController {
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN','MANAGER','USER')")
     @ApiOperation(value = "findAllEvents", nickname = "findAllEvents")
-    public List<EventOutcomeDto> findAll() {
-        return eventService.findAll();
+    public List<EventOutcomeDto> findAll(EventFindDto finder) {
+        return eventService.findAll(finder);
     }
 
     @PutMapping("update/{id}")
-    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
+    @PreAuthorize(value = "hasAuthority('MANAGER')")
     @ApiOperation(value = "updateEvent", nickname = "updateEvent")
     public Long update(@PathVariable Long id, @Valid @RequestBody EventUpdateDto dto){
         return eventService.update(id, dto);

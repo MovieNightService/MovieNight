@@ -1,13 +1,13 @@
-package com.kharkiv.movienight.service.validation.model.event;
+package com.kharkiv.movienight.service.utils.validation.model.event;
 
 import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.standard.ForbiddenException;
 import com.kharkiv.movienight.persistence.model.event.Event;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.EventRepository;
-import com.kharkiv.movienight.service.actor.ActorUtils;
-import com.kharkiv.movienight.service.validation.type.MethodType;
-import com.kharkiv.movienight.service.validation.validator.Validator;
+import com.kharkiv.movienight.service.utils.actor.ActorUtils;
+import com.kharkiv.movienight.service.utils.validation.type.MethodType;
+import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
 import lombok.Setter;
