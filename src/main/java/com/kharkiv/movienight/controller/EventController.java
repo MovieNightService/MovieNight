@@ -8,6 +8,7 @@ import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,8 +54,8 @@ public class EventController {
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN','MANAGER','USER')")
     @ApiOperation(value = "findAllEvents", nickname = "findAllEvents")
-    public List<EventOutcomeDto> findAll(EventFindDto finder) {
-        return eventService.findAll(finder);
+    public List<EventOutcomeDto> findAll(EventFindDto finder,  Pageable pageable) {
+        return eventService.findAll(finder, pageable);
     }
 
     @PutMapping("update/{id}")

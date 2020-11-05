@@ -21,7 +21,7 @@ public interface UserService extends UserDetailsService, ActorService {
 
     Long restore(Long id);
 
-    List<UserOutcomeDto> findAll();
+    List<UserOutcomeDto> findAll(UserFindDto finder);
 
     void agreement(UserAgreementDto dto);
 

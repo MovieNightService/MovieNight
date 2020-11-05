@@ -58,8 +58,8 @@ public class UserController {
     @GetMapping
     @PreAuthorize(value = "hasAuthority('ADMIN')")
     @ApiOperation(value = "findAllUsers", nickname = "findAllUsers")
-    public List<UserOutcomeDto> findAll() {
-        return userService.findAll();
+    public List<UserOutcomeDto> findAll(UserFindDto finder) {
+        return userService.findAll(finder);
     }
 
     @PutMapping("agreement")

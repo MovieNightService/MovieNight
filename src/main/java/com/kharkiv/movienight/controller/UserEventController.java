@@ -2,6 +2,7 @@ package com.kharkiv.movienight.controller;
 
 import com.kharkiv.movienight.service.userevent.UserEventService;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
+import com.kharkiv.movienight.transport.dto.userevent.UserEventFindDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventOutcomeDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +31,8 @@ public class UserEventController {
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
     @ApiOperation(value = "findAllUserEvents", nickname = "findAllUserEvents")
-    public List<UserEventOutcomeDto> findAll(){
-        return userEventService.findAll();
+    public List<UserEventOutcomeDto> findAll(UserEventFindDto finder){
+        return userEventService.findAll(finder);
     }
 
     @DeleteMapping

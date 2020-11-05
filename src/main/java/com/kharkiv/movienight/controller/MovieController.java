@@ -2,6 +2,7 @@ package com.kharkiv.movienight.controller;
 
 import com.kharkiv.movienight.service.movie.MovieService;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
+import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
 import io.swagger.annotations.Api;
@@ -45,8 +46,8 @@ public class MovieController {
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "findAllMovies", nickname = "findAllMovies")
-    public List<MovieOutcomeDto> findAll(){
-        return movieService.findAll();
+    public List<MovieOutcomeDto> findAll(MovieFindDto finder){
+        return movieService.findAll(finder);
     }
 
     @PutMapping("/update/{id}")

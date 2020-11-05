@@ -1,21 +1,34 @@
 package com.kharkiv.movienight.service.movie;
 
 import com.kharkiv.movienight.exception.movie.MovieNotFoundException;
+import com.kharkiv.movienight.persistence.model.event.Event;
+import com.kharkiv.movienight.persistence.model.movie.Genre;
 import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.MovieRepository;
+import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
+import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
+import com.kharkiv.movienight.service.utils.specification.SearchOperation;
 import com.kharkiv.movienight.service.utils.validation.type.MethodType;
 import com.kharkiv.movienight.service.utils.validation.validator.Validator;
+import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
+import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
 import com.kharkiv.movienight.transport.mapper.movie.MovieMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.*;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,8 +75,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieOutcomeDto> findAll() {
-        return movieRepository.findAll().stream()
+    public List<MovieOutcomeDto> findAll(MovieFindDto finder) {
+        return movieRepository.findAll(createSpecification(finder)).stream()
                 .map(movieMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -75,5 +88,26 @@ public class MovieServiceImpl implements MovieService {
         validator.validate(MethodType.UPDATE, dto, movie);
 
         return movieMapper.toEntity(dto, movie).getId();
+    }
+
+    private Specification<Movie> createSpecification(MovieFindDto finder){
+        CustomSpecification<Movie> customSpecification = new CustomSpecification<>();
+
+        List<SearchCriteria> criteriaList = Arrays.asList(
+                new SearchCriteria("name", finder.getName(), SearchOperation.MATCH),
+                new SearchCriteria("duration", finder.getDuration(), SearchOperation.EQUAL),
+                new SearchCriteria("issue", finder.getIssue(), SearchOperation.EQUAL),
+                new SearchCriteria("rating", finder.getRating(), SearchOperation.EQUAL),
+                new SearchCriteria("language", finder.getLanguage(), SearchOperation.MATCH),
+                new SearchCriteria("description", finder.getDescription(), SearchOperation.MATCH),
+                new SearchCriteria("age", finder.getAge(), SearchOperation.EQUAL)
+//                new SearchCriteria("genre", finder.getGenre(), SearchOperation.IN)
+        );
+
+        criteriaList.stream()
+                .filter(searchCriteria -> searchCriteria.getValue() != null)
+                .forEach(customSpecification::addCriteria);
+
+        return customSpecification;
     }
 }

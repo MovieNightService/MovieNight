@@ -1,19 +1,17 @@
-package com.kharkiv.movienight.service.event.specification;
+package com.kharkiv.movienight.service.utils.specification;
 
-import com.kharkiv.movienight.persistence.model.event.Event;
-import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
-import com.kharkiv.movienight.service.utils.specification.SearchOperation;
+import com.kharkiv.movienight.persistence.model.movie.Movie;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventSpecification implements Specification<Event> {
+public class CustomSpecification<T> implements Specification<T> {
 
     private final List<SearchCriteria> criteriaList;
 
-    public EventSpecification() {
+    public CustomSpecification() {
         this.criteriaList = new ArrayList<>();
     }
 
@@ -21,12 +19,8 @@ public class EventSpecification implements Specification<Event> {
         criteriaList.add(criteria);
     }
 
-    public List<SearchCriteria> getCriteriaList(){
-        return this.criteriaList;
-    }
-
     @Override
-    public Predicate toPredicate(Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> predicates = new ArrayList<>();
 
         for (SearchCriteria criteria : criteriaList) {

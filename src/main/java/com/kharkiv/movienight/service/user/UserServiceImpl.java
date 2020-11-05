@@ -2,14 +2,20 @@ package com.kharkiv.movienight.service.user;
 
 import com.kharkiv.movienight.exception.user.UploadAvatarException;
 import com.kharkiv.movienight.exception.user.UserNotFoundException;
+import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
 import com.kharkiv.movienight.service.utils.mail.EmailService;
+import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
+import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
+import com.kharkiv.movienight.service.utils.specification.SearchOperation;
 import com.kharkiv.movienight.service.utils.validation.type.MethodType;
 import com.kharkiv.movienight.service.utils.validation.validator.Validator;
+import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.user.*;
 import com.kharkiv.movienight.transport.mapper.user.UserMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,14 +37,12 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final Validator<User> validator;
-    private final EmailService emailService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, Validator<User> validator, EmailService emailService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, Validator<User> validator) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.validator = validator;
-        this.emailService = emailService;
     }
 
     @Override
@@ -98,8 +103,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserOutcomeDto> findAll() {
-        return userRepository.findAll().stream()
+    public List<UserOutcomeDto> findAll(UserFindDto finder) {
+        return userRepository.findAll(createSpecification(finder)).stream()
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }
@@ -171,5 +176,25 @@ public class UserServiceImpl implements UserService {
 
     private User findByUsernameAndDeletedFalse(String name) {
         return userRepository.findByUsernameAndDeletedFalse(name).orElseThrow(UserNotFoundException::new);
+    }
+
+    private Specification<User> createSpecification(UserFindDto finder){
+        CustomSpecification<User> customSpecification = new CustomSpecification<>();
+
+        List<SearchCriteria> criteriaList = Arrays.asList(
+                new SearchCriteria("firstName", finder.getFirstName(), SearchOperation.MATCH),
+                new SearchCriteria("lastName", finder.getLastName(), SearchOperation.MATCH),
+                new SearchCriteria("dateOfBirth", finder.getDateOfBirth(), SearchOperation.EQUAL),
+                new SearchCriteria("email", finder.getEmail(), SearchOperation.MATCH),
+                new SearchCriteria("phone", finder.getPhone(), SearchOperation.EQUAL),
+                new SearchCriteria("username", finder.getUsername(), SearchOperation.MATCH)
+//                new SearchCriteria("name", finder.getRoles(), SearchOperation.IN)
+        );
+
+        criteriaList.stream()
+                .filter(searchCriteria -> searchCriteria.getValue() != null)
+                .forEach(customSpecification::addCriteria);
+
+        return customSpecification;
     }
 }

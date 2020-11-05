@@ -6,6 +6,7 @@ import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
 import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.event.EventOutcomeDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface EventService extends ActorService {
 
     Long restore(Long id);
 
-    List<EventOutcomeDto> findAll(EventFindDto finder);
+    List<EventOutcomeDto> findAll(EventFindDto finder,  Pageable pageable);
 
     Long update(Long id, EventUpdateDto dto);
 }

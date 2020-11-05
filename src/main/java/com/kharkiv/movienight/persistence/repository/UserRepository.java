@@ -1,11 +1,13 @@
 package com.kharkiv.movienight.persistence.repository;
 
 import com.kharkiv.movienight.persistence.model.user.User;
+import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
     Optional<User> findByUsernameAndDeletedFalse(String username);
 
