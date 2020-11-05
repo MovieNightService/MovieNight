@@ -18,3 +18,4 @@ build
 /gradlew
 lib
 generated/
+src/main/resources/ticket
