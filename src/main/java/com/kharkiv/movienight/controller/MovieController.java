@@ -29,7 +29,7 @@ public class MovieController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize(value= "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+    @PreAuthorize(value= "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "findByIdMovie", nickname = "findByIdMovie")
     public MovieOutcomeDto findById(@PathVariable Long id) {
         return movieService.findByIdUnsafe(id);
@@ -43,7 +43,7 @@ public class MovieController {
     }
 
     @GetMapping
-    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER', 'USER')")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "findAllMovies", nickname = "findAllMovies")
     public List<MovieOutcomeDto> findAll(){
         return movieService.findAll();

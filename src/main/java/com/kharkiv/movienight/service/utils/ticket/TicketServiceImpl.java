@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.ticket;
+package com.kharkiv.movienight.service.utils.ticket;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -10,14 +10,12 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.persistence.model.event.Event;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
-import com.kharkiv.movienight.service.mail.EmailService;
-import com.kharkiv.movienight.service.validation.type.MethodType;
-import com.kharkiv.movienight.service.validation.validator.Validator;
+import com.kharkiv.movienight.service.utils.mail.EmailService;
+import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.mail.EmailTicketDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;

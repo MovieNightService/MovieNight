@@ -1,7 +1,6 @@
 package com.kharkiv.movienight.transport.mapper.event;
 
 import com.kharkiv.movienight.persistence.model.event.Event;
-import com.kharkiv.movienight.service.actor.ActorService;
 import com.kharkiv.movienight.service.movie.MovieService;
 import com.kharkiv.movienight.service.user.UserService;
 import com.kharkiv.movienight.transport.dto.event.EventCreateDto;

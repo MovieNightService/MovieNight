@@ -2,7 +2,6 @@ package com.kharkiv.movienight.transport.mapper.user;
 
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
-import com.kharkiv.movienight.service.actor.ActorService;
 import com.kharkiv.movienight.transport.dto.user.UserRegistrationDto;
 import com.kharkiv.movienight.transport.dto.user.UserOutcomeDto;
 import com.kharkiv.movienight.transport.dto.user.UserUpdateDto;
@@ -12,7 +11,6 @@ import org.mapstruct.MappingTarget;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.validation.type;
+package com.kharkiv.movienight.service.utils.validation.type;
 
 public enum  MethodType {
     CREATE,

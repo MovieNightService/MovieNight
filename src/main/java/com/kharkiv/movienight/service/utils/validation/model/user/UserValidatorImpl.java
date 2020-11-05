@@ -1,12 +1,12 @@
-package com.kharkiv.movienight.service.validation.model.user;
+package com.kharkiv.movienight.service.utils.validation.model.user;
 
 import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.standard.ForbiddenException;
 import com.kharkiv.movienight.exception.user.*;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
-import com.kharkiv.movienight.service.validation.type.MethodType;
-import com.kharkiv.movienight.service.validation.validator.Validator;
+import com.kharkiv.movienight.service.utils.validation.type.MethodType;
+import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.user.UserRegistrationDto;
 import com.kharkiv.movienight.transport.dto.user.UserResetPasswordDto;
 import com.kharkiv.movienight.transport.dto.user.UserUpdateDto;

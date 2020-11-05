@@ -1,8 +1,9 @@
 package com.kharkiv.movienight.service.event;
 
 import com.kharkiv.movienight.persistence.model.event.Event;
-import com.kharkiv.movienight.service.actor.ActorService;
+import com.kharkiv.movienight.service.utils.actor.ActorService;
 import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
+import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.event.EventOutcomeDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
 
@@ -20,7 +21,7 @@ public interface EventService extends ActorService {
 
     Long restore(Long id);
 
-    List<EventOutcomeDto> findAll();
+    List<EventOutcomeDto> findAll(EventFindDto finder);
 
     Long update(Long id, EventUpdateDto dto);
 }

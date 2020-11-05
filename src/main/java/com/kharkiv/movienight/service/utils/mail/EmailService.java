@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.service.mail;
+package com.kharkiv.movienight.service.utils.mail;
 
 import com.kharkiv.movienight.transport.dto.mail.EmailTemplateDto;
 import org.springframework.scheduling.annotation.Async;

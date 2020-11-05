@@ -1,16 +1,14 @@
-package com.kharkiv.movienight.service.validation.model.userevent;
+package com.kharkiv.movienight.service.utils.validation.model.userevent;
 
 import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.exception.standard.ForbiddenException;
 import com.kharkiv.movienight.persistence.model.event.Event;
-import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
 import com.kharkiv.movienight.service.event.EventService;
-import com.kharkiv.movienight.service.validation.type.MethodType;
-import com.kharkiv.movienight.service.validation.validator.Validator;
-import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
+import com.kharkiv.movienight.service.utils.validation.type.MethodType;
+import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
