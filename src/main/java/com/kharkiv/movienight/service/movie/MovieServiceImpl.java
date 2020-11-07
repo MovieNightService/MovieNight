@@ -6,6 +6,7 @@ import com.kharkiv.movienight.persistence.model.movie.Genre;
 import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.MovieRepository;
+import com.kharkiv.movienight.service.utils.pageable.PageableService;
 import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
 import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
 import com.kharkiv.movienight.service.utils.specification.SearchOperation;
@@ -16,9 +17,11 @@ import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.mapper.movie.MovieMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,8 +78,9 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<MovieOutcomeDto> findAll(MovieFindDto finder) {
-        return movieRepository.findAll(createSpecification(finder)).stream()
+    public List<MovieOutcomeDto> findAll(MovieFindDto finder, PageableDto pageableDto) {
+        Pageable pageable = PageableService.getPageable(pageableDto);
+        return movieRepository.findAll(createSpecification(finder), pageable).stream()
                 .map(movieMapper::toDto)
                 .collect(Collectors.toList());
     }

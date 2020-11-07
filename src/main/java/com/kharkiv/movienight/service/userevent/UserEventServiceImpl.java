@@ -6,6 +6,7 @@ import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
 import com.kharkiv.movienight.service.event.EventService;
 import com.kharkiv.movienight.service.user.UserService;
+import com.kharkiv.movienight.service.utils.pageable.PageableService;
 import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
 import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
 import com.kharkiv.movienight.service.utils.specification.SearchOperation;
@@ -13,12 +14,14 @@ import com.kharkiv.movienight.service.utils.ticket.TicketService;
 import com.kharkiv.movienight.service.utils.validation.type.MethodType;
 import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.event.EventFindDto;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventCreateDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventFindDto;
 import com.kharkiv.movienight.transport.dto.userevent.UserEventOutcomeDto;
 import com.kharkiv.movienight.transport.mapper.userevent.UserEventMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,8 +54,9 @@ public class UserEventServiceImpl implements UserEventService {
     }
 
     @Override
-    public List<UserEventOutcomeDto> findAll(UserEventFindDto finder) {
-        return userEventRepository.findAll(createSpecification(finder)).stream()
+    public List<UserEventOutcomeDto> findAll(UserEventFindDto finder, PageableDto pageableDto) {
+        Pageable pageable = PageableService.getPageable(pageableDto);
+        return userEventRepository.findAll(createSpecification(finder), pageable).stream()
                 .map(userEventMapper::toDto)
                 .collect(Collectors.toList());
     }

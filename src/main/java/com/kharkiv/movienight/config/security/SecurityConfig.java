@@ -1,6 +1,7 @@
 package com.kharkiv.movienight.config.security;
 
 import com.kharkiv.movienight.service.user.UserService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

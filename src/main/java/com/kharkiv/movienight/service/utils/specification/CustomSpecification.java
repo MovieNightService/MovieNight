@@ -1,6 +1,6 @@
 package com.kharkiv.movienight.service.utils.specification;
 
-import com.kharkiv.movienight.persistence.model.movie.Movie;
+import com.google.common.collect.Sets;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
@@ -24,23 +24,21 @@ public class CustomSpecification<T> implements Specification<T> {
         List<Predicate> predicates = new ArrayList<>();
 
         for (SearchCriteria criteria : criteriaList) {
+            Object value = criteria.getValue();
+
             if (criteria.getOperation().equals(SearchOperation.EQUAL)) {
                 Path<Object> key = root.get(criteria.getKey());
-                Object value = criteria.getValue();
-
                 predicates.add(builder.equal(key, value));
 
             } else if (criteria.getOperation().equals(SearchOperation.IN)) {
                 Path<Object> key = root.get(criteria.getKey());
-                Object value = criteria.getValue();
-
                 predicates.add(builder.in(key).value(value));
 
             } else if (criteria.getOperation().equals(SearchOperation.MATCH)) {
                 Expression<String> key = builder.lower(root.get(criteria.getKey()));
-                String value = "%" + criteria.getValue().toString().toLowerCase() + "%";
+                String valueInLowerCase = "%" + value.toString().toLowerCase() + "%";
 
-                predicates.add(builder.like(key, value));
+                predicates.add(builder.like(key, valueInLowerCase));
             }
         }
 

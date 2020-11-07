@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class MovieFindDto {
     private String language;
     private String description;
     private Integer age;
-    private List<Genre> genre;
+//    private Set<Genre> genre;
 }

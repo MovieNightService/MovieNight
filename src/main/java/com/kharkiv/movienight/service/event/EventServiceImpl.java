@@ -5,6 +5,7 @@ import com.kharkiv.movienight.persistence.model.event.Event;
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.repository.EventRepository;
 import com.kharkiv.movienight.service.user.UserService;
+import com.kharkiv.movienight.service.utils.pageable.PageableService;
 import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
 import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
 import com.kharkiv.movienight.service.utils.specification.SearchOperation;
@@ -14,6 +15,7 @@ import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
 import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.event.EventOutcomeDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.mapper.event.EventMapper;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +86,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EventOutcomeDto> findAll(EventFindDto finder,  Pageable pageable) {
+    public List<EventOutcomeDto> findAll(EventFindDto finder, PageableDto pageableDto) {
+        Pageable pageable = PageableService.getPageable(pageableDto);
         return eventRepository.findAll(createSpecification(finder), pageable).stream()
                 .map(eventMapper::toDto)
                 .collect(Collectors.toList());
@@ -99,7 +102,7 @@ public class EventServiceImpl implements EventService {
         return eventMapper.toEntity(dto, event).getId();
     }
 
-    private Specification<Event> createSpecification(EventFindDto finder){
+    private Specification<Event> createSpecification(EventFindDto finder) {
         CustomSpecification<Event> customSpecification = new CustomSpecification<>();
 
         List<SearchCriteria> criteriaList = Arrays.asList(

@@ -5,6 +5,7 @@ import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,8 @@ public class MovieController {
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "findAllMovies", nickname = "findAllMovies")
-    public List<MovieOutcomeDto> findAll(MovieFindDto finder){
-        return movieService.findAll(finder);
+    public List<MovieOutcomeDto> findAll(MovieFindDto finder, PageableDto pageable){
+        return movieService.findAll(finder, pageable);
     }
 
     @PutMapping("/update/{id}")

@@ -2,6 +2,7 @@ package com.kharkiv.movienight.service.user;
 
 import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.service.utils.actor.ActorService;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.dto.user.*;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,7 @@ public interface UserService extends UserDetailsService, ActorService {
 
     Long restore(Long id);
 
-    List<UserOutcomeDto> findAll(UserFindDto finder);
+    List<UserOutcomeDto> findAll(UserFindDto finder, PageableDto pageableDto);
 
     void agreement(UserAgreementDto dto);
 

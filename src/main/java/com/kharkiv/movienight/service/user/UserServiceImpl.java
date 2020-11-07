@@ -7,14 +7,17 @@ import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.user.UserRole;
 import com.kharkiv.movienight.persistence.repository.UserRepository;
 import com.kharkiv.movienight.service.utils.mail.EmailService;
+import com.kharkiv.movienight.service.utils.pageable.PageableService;
 import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
 import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
 import com.kharkiv.movienight.service.utils.specification.SearchOperation;
 import com.kharkiv.movienight.service.utils.validation.type.MethodType;
 import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.event.EventFindDto;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.dto.user.*;
 import com.kharkiv.movienight.transport.mapper.user.UserMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -103,8 +106,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserOutcomeDto> findAll(UserFindDto finder) {
-        return userRepository.findAll(createSpecification(finder)).stream()
+    public List<UserOutcomeDto> findAll(UserFindDto finder, PageableDto pageableDto) {
+        Pageable pageable = PageableService.getPageable(pageableDto);
+        return userRepository.findAll(createSpecification(finder), pageable).stream()
                 .map(userMapper::toDto)
                 .collect(Collectors.toList());
     }

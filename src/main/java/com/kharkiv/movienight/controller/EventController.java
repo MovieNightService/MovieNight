@@ -5,10 +5,12 @@ import com.kharkiv.movienight.transport.dto.event.EventCreateDto;
 import com.kharkiv.movienight.transport.dto.event.EventFindDto;
 import com.kharkiv.movienight.transport.dto.event.EventOutcomeDto;
 import com.kharkiv.movienight.transport.dto.event.EventUpdateDto;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,7 +56,7 @@ public class EventController {
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN','MANAGER','USER')")
     @ApiOperation(value = "findAllEvents", nickname = "findAllEvents")
-    public List<EventOutcomeDto> findAll(EventFindDto finder,  Pageable pageable) {
+    public List<EventOutcomeDto> findAll(EventFindDto finder, PageableDto pageable) {
         return eventService.findAll(finder, pageable);
     }
 

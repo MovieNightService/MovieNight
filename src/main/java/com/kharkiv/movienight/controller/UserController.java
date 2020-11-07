@@ -1,6 +1,7 @@
 package com.kharkiv.movienight.controller;
 
 import com.kharkiv.movienight.service.user.UserService;
+import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.dto.user.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,8 +59,8 @@ public class UserController {
     @GetMapping
     @PreAuthorize(value = "hasAuthority('ADMIN')")
     @ApiOperation(value = "findAllUsers", nickname = "findAllUsers")
-    public List<UserOutcomeDto> findAll(UserFindDto finder) {
-        return userService.findAll(finder);
+    public List<UserOutcomeDto> findAll(UserFindDto finder, PageableDto pageableDto) {
+        return userService.findAll(finder, pageableDto);
     }
 
     @PutMapping("agreement")
