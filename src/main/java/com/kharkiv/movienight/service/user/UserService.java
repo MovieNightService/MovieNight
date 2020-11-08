@@ -16,8 +16,6 @@ public interface UserService extends UserDetailsService, ActorService {
 
     Long registration(UserRegistrationDto dto);
 
-    Long create(User user);
-
     Long update(Long id, UserUpdateDto dto);
 
     Long delete(Long id);

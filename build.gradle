@@ -50,7 +50,6 @@ dependencies {
     compile 'org.springframework:spring-context-support:5.2.5.RELEASE'
     compile 'com.google.zxing:javase:3.3.0'
     compile 'com.google.zxing:core:3.3.0'
-    compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE'
 
     compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.15'
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
