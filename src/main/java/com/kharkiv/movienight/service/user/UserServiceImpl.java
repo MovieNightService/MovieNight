@@ -77,6 +77,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long create(User user) {
+        User defaultUser = findById(1L);
+        user.setCreatedBy(defaultUser);
+        user.setUpdatedBy(defaultUser);
+
+        return userRepository.save(user).getId();
+    }
+
+    @Override
     public Long update(Long id, UserUpdateDto dto) {
         User user = findById(id);
 
