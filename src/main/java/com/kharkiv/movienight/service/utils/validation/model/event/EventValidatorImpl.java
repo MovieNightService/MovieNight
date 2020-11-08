@@ -51,27 +51,18 @@ public class EventValidatorImpl implements Validator<Event> {
 
     private void executeValidation(MethodType methodType, User actor, Object dto, Event event) {
         switch (methodType) {
-            case CREATE:
-                validateCreate(dto, actor);
-                break;
-            case UPDATE:
-                validateUpdate(dto, event);
-                break;
-            case DELETE:
-                validateDelete(actor, event);
-                break;
-            case RESTORE:
-                validateRestore(actor, event);
-                break;
-            default:
-                throw new BadRequestException("Incorrect METHOD_TYPE");
+            case CREATE -> validateCreate(dto, actor);
+            case UPDATE -> validateUpdate(dto, event);
+            case DELETE -> validateDelete(actor, event);
+            case RESTORE -> validateRestore(actor, event);
+            default -> throw new BadRequestException("Incorrect METHOD_TYPE");
         }
     }
 
     private void validateRestore(User actor, Event event) {
         if(ActorUtils.isManager(actor)){
             if(!actor.getId().equals(event.getCreatedBy().getId())){
-                throw new ForbiddenException("Can't restore event another manager");
+                throw new BadRequestException("Can't restore event another manager");
             }
         }
     }
@@ -79,7 +70,7 @@ public class EventValidatorImpl implements Validator<Event> {
     private void validateDelete(User actor, Event event) {
         if(ActorUtils.isManager(actor)){
             if(!actor.getId().equals(event.getCreatedBy().getId())){
-                throw new ForbiddenException("Can't delete event another manager");
+                throw new BadRequestException("Can't delete event another manager");
             }
         }
     }

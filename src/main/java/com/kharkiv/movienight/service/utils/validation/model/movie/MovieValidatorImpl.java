@@ -52,14 +52,9 @@ public class MovieValidatorImpl implements Validator<Movie> {
 
     public void executeValidation(MethodType methodType, Object dto, Movie movie) {
         switch (methodType) {
-            case CREATE:
-                validateCreate(dto);
-                break;
-            case UPDATE:
-                validateUpdate(dto, movie);
-                break;
-            default:
-                throw new BadRequestException("Incorrect METHOD_TYPE");
+            case CREATE -> validateCreate(dto);
+            case UPDATE -> validateUpdate(dto, movie);
+            default -> throw new BadRequestException("Incorrect METHOD_TYPE");
         }
     }
 
@@ -80,7 +75,6 @@ public class MovieValidatorImpl implements Validator<Movie> {
         } else {
             throw new BadRequestException("DTO was not get or his type is incorrect");
         }
-
     }
 
     private void validateUpdate(Object dto, Movie movie) {

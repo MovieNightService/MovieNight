@@ -2,10 +2,12 @@ package com.kharkiv.movienight.service.userevent;
 
 import com.kharkiv.movienight.exception.userevent.UserEventNotFoundException;
 import com.kharkiv.movienight.persistence.model.movie.Movie;
+import com.kharkiv.movienight.persistence.model.user.User;
 import com.kharkiv.movienight.persistence.model.userevent.UserEvent;
 import com.kharkiv.movienight.persistence.repository.UserEventRepository;
 import com.kharkiv.movienight.service.event.EventService;
 import com.kharkiv.movienight.service.user.UserService;
+import com.kharkiv.movienight.service.utils.actor.ActorUtils;
 import com.kharkiv.movienight.service.utils.pageable.PageableService;
 import com.kharkiv.movienight.service.utils.specification.CustomSpecification;
 import com.kharkiv.movienight.service.utils.specification.SearchCriteria;
@@ -56,6 +58,12 @@ public class UserEventServiceImpl implements UserEventService {
     @Override
     public List<UserEventOutcomeDto> findAll(UserEventFindDto finder, PageableDto pageableDto) {
         Pageable pageable = PageableService.getPageable(pageableDto);
+        User actor = getActorFromContext();
+
+        if (ActorUtils.isUser(actor)) {
+            finder.setUserId(actor.getId());
+        }
+
         return userEventRepository.findAll(createSpecification(finder), pageable).stream()
                 .map(userEventMapper::toDto)
                 .collect(Collectors.toList());

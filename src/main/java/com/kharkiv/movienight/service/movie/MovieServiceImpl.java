@@ -47,7 +47,7 @@ public class MovieServiceImpl implements MovieService {
     public Long create(MovieCreateDto dto) {
         User actor = getActorFromContext();
 
-        validator.validate(MethodType.CREATE, dto);
+        validator.validate(MethodType.CREATE, dto, null);
 
         Movie movie = movieMapper.toEntity(dto);
         movie.setCreatedBy(actor);
