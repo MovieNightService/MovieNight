@@ -18,4 +18,5 @@ build
 /gradlew
 lib
 generated/
-src/main/resources/ticket
+mn-app/src/main/resources/ticket/pdf/*
+mn-app/src/main/resources/ticket/qr/*

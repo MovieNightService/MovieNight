@@ -30,13 +30,11 @@ import java.nio.file.Path;
 @Setter(onMethod_ = @Autowired)
 public class TicketServiceImpl implements TicketService {
 
-    private final String PDF_PATH_FOR_MAIL = "src/main/resources/ticket/pdf/";
-    private final String PDF_PATH = "./src/main/resources/ticket/pdf/";
-    private final String QR_PATH = "./src/main/resources/ticket/qr/";
+    private final String PDF_PATH_FOR_MAIL = "mn-app/src/main/resources/ticket/pdf/";
+    private final String PDF_PATH = "./mn-app/src/main/resources/ticket/pdf/";
+    private final String QR_PATH = "./mn-app/src/main/resources/ticket/qr/";
 
-    private UserEventRepository userEventRepository;
     private EmailService emailService;
-    private Validator<UserEvent> validator;
 
     @Override
     public void create(UserEvent userEvent) {
