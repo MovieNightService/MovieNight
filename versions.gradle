@@ -1,6 +1,6 @@
 allprojects {
     ext {
-        springCloudVersion = 'Hoxton.SR8'
+        springCloudVersion = 'Hoxton.SR5'
         springFoxVersion = '2.9.2'
         mapstructVersion = '1.4.0.Final'
     }
