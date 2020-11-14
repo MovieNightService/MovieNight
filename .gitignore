@@ -18,5 +18,5 @@ build
 /gradlew
 lib
 generated/
-**.pdf
-**.png
+*.png
+*.pdf
