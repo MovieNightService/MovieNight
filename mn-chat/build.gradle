@@ -24,7 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-reactor-netty'
-//    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:2.2.4.RELEASE'
 
     compile 'org.projectlombok:lombok'
 

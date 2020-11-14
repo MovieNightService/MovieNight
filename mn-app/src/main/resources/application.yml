@@ -48,3 +48,8 @@ user:
     clientId: R2dpxQ3vPrtfgF72
     clientSecret: fDw7Mpkk5czHNuSRtmhGmAGL42CaxQB9
     redirectUris: https://www.postman.com/oauth2/callback,http://localhost:8081/webjars/springfox-swagger-ui/oauth2-redirect.html
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true

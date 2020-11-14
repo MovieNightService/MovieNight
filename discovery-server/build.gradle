@@ -12,10 +12,7 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    set('springCloudVersion', "Hoxton.SR5")
-}
-//apply from: '../versions.gradle'
+apply from: '../versions.gradle'
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
