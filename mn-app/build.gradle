@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.liquibase.gradle' version '2.0.1'
+}
+
+compileJava {
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.unmappedTargetPolicy=IGNORE'
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/generated/main/java'
+        }
+    }
+}
+
+group 'com.movienight'
+version '1.0-SNAPSHOT'
+
+apply from: '../versions.gradle'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
+    implementation "org.postgresql:postgresql"
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation "io.springfox:springfox-swagger2:${springFoxVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${springFoxVersion}"
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation "org.liquibase:liquibase-core"
+
+    compile 'org.projectlombok:lombok'
+    compile 'org.hibernate:hibernate-validator:6.0.13.Final'
+    compile 'joda-time:joda-time:2.10'
+    compile 'org.springframework.boot:spring-boot-starter-mail:2.2.5.RELEASE'
+    compile 'org.springframework:spring-context-support:5.2.5.RELEASE'
+    compile 'com.google.zxing:javase:3.3.0'
+    compile 'com.google.zxing:core:3.3.0'
+
+    compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.15'
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
+    //    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '2.2.5.RELEASE'
+
+    annotationProcessor('org.projectlombok:lombok')
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
