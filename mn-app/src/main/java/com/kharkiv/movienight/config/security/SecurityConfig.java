@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final String[] REQUESTS = {
+            "/",
             "/login",
             "/oauth/authorize",
             "/v2/api-docs",
@@ -40,7 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/vendor/**",
             "/fonts/**",
             "/js/**",
-            "/images/**"
+            "/images/**",
+            "/all-movies",      // to delete
+            "/soon",            // to delete
+            "/my-tickets",      // to delete
+            "/about-me",        // to delete
+            "/career"           // to delete
     };
 
     public SecurityConfig(PasswordEncoder passwordEncoder, UserService userService) {
@@ -58,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
+                .and()
+                .logout().logoutSuccessUrl("/login")
                 .permitAll();
     }
 

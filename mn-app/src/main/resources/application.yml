@@ -4,19 +4,6 @@ server:
 spring:
   application:
     name: com.kharkiv.movienight
-  cloud:
-    gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
   mail:
     host: smtp.gmail.com
     port: 587

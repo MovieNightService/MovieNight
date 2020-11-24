@@ -1,53 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-      <title>Movie Night Application | Chat</title>
-      <link rel="stylesheet" href="css/main.css" />
-  </head>
-  <body>
-    <noscript>
-      <h2>Sorry! Your browser doesn't support Javascript</h2>
-    </noscript>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Movie Night | Чат</title>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<noscript>
+    <h2>Извините! Ваш браузер не поддерживает Javascript! Проверьте настройки!</h2>
+</noscript>
 
-    <div id="username-page">
-        <div class="username-page-container">
-            <h1 class="title">Type your username</h1>
-            <form id="usernameForm" name="usernameForm">
-                <div class="form-group">
-                    <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="accent username-submit">Start Chatting</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div id="chat-page" class="hidden">
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>Movie Night</h2>
+<div id="username-page">
+    <div class="username-page-container">
+        <h1 class="title">Укажите свое имя</h1>
+        <form id="usernameForm" name="usernameForm">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control"/>
             </div>
-            <div class="connecting">
-                Connecting...
+            <div class="form-group">
+                <button onclick="window.location.href='http://localhost:8081'" style="background-color: #9b2626;"
+                        class="accent username-submit">
+                    Вернуться
+                </button>
+                <button type="submit" class="accent username-submit">Войти в чат</button>
             </div>
-            <ul id="messageArea">
-
-            </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
-                <div class="form-group">
-                    <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary">Send</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+        </form>
     </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+<div id="chat-page" class="hidden">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Movie Night</h2>
+        </div>
+        <div class="connecting">
+            Соединение...
+        </div>
+        <ul id="messageArea">
+
+        </ul>
+        <form id="messageForm" name="messageForm" nameForm="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Напишите здесь..." autocomplete="off"
+                           class="form-control"/>
+                    <button onclick="window.location.href='http://localhost:8081'" style="background-color: #9b2626;"
+                            class="accent username-submit">
+                        Вернуться
+                    </button>
+                    <button type="submit" class="primary">Отправить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="js/main.js"></script>
+</body>
 </html>

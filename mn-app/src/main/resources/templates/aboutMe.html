@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
+<head>
+    <title>MovieNight</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" th:href="@{'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700'}">
+    <link rel="stylesheet" type="text/css" th:href="@{vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/fontawesome.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/templatemo-style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{css/owl.css}">
+</head>
+
+<body class="is-preload">
+
+<div id="wrapper">
+
+    <div id="main">
+        <div class="inner">
+            <header id="header">
+                <div class="logo">
+                    <a href="/">MOVIE NIGHT</a>
+                </div>
+            </header>
+
+            <section class="left-image">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img th:src="@{/images/movie1.jpg}" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="right-content">
+                                <h4 style="color: white">Название фильма</h4>
+                                <p>Описание</p>
+                                <div class="primary-button">
+                                    <a href="#">Подробнее..</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="sidebar">
+
+        <div class="inner">
+            <section id="search" class="alt">
+            </section>
+
+            <nav id="menu">
+                <ul>
+                    <li sec:authorize="isAuthenticated()"><a href="/all-movies">Все фильмы</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/my-tickets">Мои билеты</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/soon">Скоро в прокате</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/about-me">Личный кабинет</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/career">Сотрудничество</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="http://localhost:8080">Чат</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/logout">Выход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+<script th:src="@{js/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{js/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<script th:src="@{js/browser.min.js}"></script>
+<script th:src="@{js/breakpoints.min.js}"></script>
+<script th:src="@{js/transition.js}"></script>
+<script th:src="@{js/owl-carousel.js}"></script>
+<script th:src="@{js/custom.js}"></script>
+<script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
+</body>
+
+</html>
