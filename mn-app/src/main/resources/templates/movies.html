@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
 <head>
     <title>MovieNight</title>
 
@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{css/templatemo-style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/owl.css}">
 </head>
-
 <body class="is-preload">
 
 <div id="wrapper">
@@ -25,6 +24,16 @@
                     <a href="/">MOVIE NIGHT</a>
                 </div>
             </header>
+
+            <div sec:authorize="!isAuthenticated()">
+                <section class="left-image">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3 style="color: white">Вы не вошли в систему!</h3><h4><a href="/login">  Войти</a></h4>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
             <section class="left-image">
                 <div class="container-fluid">
@@ -38,7 +47,7 @@
                                     <h4 style="color: white"><td th:text="${movie.name}"></td></h4>
                                     <p><td th:text="${movie.description}"></td></p>
                                     <div class="primary-button">
-                                        <a href="#">Подробнее..</a>
+                                        <a th:href="@{single-movies(id=${movie.id})}">Подробнее..</a>
                                     </div>
                                 </div>
                             </div>
@@ -59,11 +68,24 @@
 
             <nav id="menu">
                 <ul>
-                    <li sec:authorize="isAuthenticated()"><a href="/all-movies">Все фильмы</a></li>
-                    <li sec:authorize="isAuthenticated()"><a href="/my-tickets">Мои билеты</a></li>
-                    <li sec:authorize="isAuthenticated()"><a href="/soon">Скоро в прокате</a></li>
+                    <!--       ADMIN             -->
+                    <li sec:authorize="hasAuthority('ADMIN')"><a href="/all-movies">Все фильмы</a></li>
+                    <li sec:authorize="hasAuthority('ADMIN')"><a href="#">Все пользователи</a></li>
+                    <li sec:authorize="hasAuthority('ADMIN')"><a href="#">Все организаторы</a></li>
+                    <li sec:authorize="hasAuthority('ADMIN')"><a href="#">Изменить пользователя</a></li>
+
+                    <!--       USER             -->
+                    <li sec:authorize="hasAuthority('USER')"><a href="/my-tickets">Мои билеты</a></li>
+                    <li sec:authorize="hasAuthority('USER')"><a href="/career">Сотрудничество</a></li>
+                    <li sec:authorize="hasAuthority('USER')"><a href="#">Кто пойдет со мной?</a></li>
+
+                    <!--       MANAGER             -->
+                    <li sec:authorize="hasAuthority('MANAGER')"><a href="#">Ползьователи по событию</a></li>
+                    <li sec:authorize="hasAuthority('MANAGER')"><a href="#">Все фильмы</a></li>
+
+                    <!--       COMMON             -->
                     <li sec:authorize="isAuthenticated()"><a href="/about-me">Личный кабинет</a></li>
-                    <li sec:authorize="isAuthenticated()"><a href="/career">Сотрудничество</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="#">Все события</a></li>
                     <li sec:authorize="isAuthenticated()"><a href="http://localhost:8080">Чат</a></li>
                     <li sec:authorize="isAuthenticated()"><a href="/logout">Выход</a></li>
                 </ul>

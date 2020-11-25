@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" th:href="@{'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700'}">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700'}">
     <link rel="stylesheet" type="text/css" th:href="@{vendor/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/fontawesome.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/templatemo-style.css}">
@@ -29,7 +30,7 @@
                 <section class="left-image">
                     <div class="container-fluid">
                         <div class="row">
-                            <h3 style="color: white">Вы не вошли в систему!</h3><h4><a href="/login">  Войти</a></h4>
+                            <h3 style="color: white">Вы не вошли в систему!</h3><h4><a href="/login"> Войти</a></h4>
                         </div>
                     </div>
                 </section>
@@ -38,20 +39,37 @@
             <div sec:authorize="isAuthenticated()">
                 <section class="left-image">
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img th:src="@{/images/movie1.jpg}" />
-                            </div>
-                            <div class="col-md-6">
-                                <div class="right-content">
-                                    <h4 style="color: white">Название фильма</h4>
-                                    <p>Описание</p>
-                                    <div class="primary-button">
-                                        <a href="#">Подробнее..</a>
+                        <tr th:each="movie : ${singleMovie}">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <img th:src="@{/images/movie1.jpg}"/>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="right-content">
+                                        <br>
+                                        <br>
+                                        <h2 style="color: white">
+                                            <td th:text="${singleMovie.name}"></td>
+                                        </h2>
+                                        <p>Продолжительность: <td th:text="${singleMovie.duration}"></td> мин</p>
+                                        <p>Возраст: <td th:text="${singleMovie.age}"></td>+</p>
+                                        <p>Год выпуска: <td th:text="${#dates.year(singleMovie.issue)}"></td></p>
+                                        <p>Рейтинг: <td th:text="${singleMovie.rating}"></td>/10.0</p>
+                                        <p>Язык: <td th:text="${singleMovie.language}"></td></p>
+                                        <p>Описание: <td th:text="${singleMovie.description}"></td></p>
+                                        <p>Трейлер: </p>
+                                        <td><iframe width="420" height="315" th:src="'https://www.youtube.com/embed/' + ${singleMovie.trailer}"></iframe></td>
+                                        <br>
+                                        <div class="primary-button">
+                                            <a href="#">Удалить</a><t><t></t></t>
+                                            <a href="#">Изменить</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <br>
+                            <br>
+                        </tr>
                     </div>
                 </section>
             </div>

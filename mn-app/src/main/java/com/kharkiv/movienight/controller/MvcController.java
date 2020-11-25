@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.ws.rs.Path;
 
 @Controller
 @Setter(onMethod_ = @Autowired)
@@ -30,6 +34,12 @@ public class MvcController {
         return "movies";
     }
 
+    @GetMapping("single-movies")
+    public String singleMovie(Model model, @RequestParam Long id){
+        model.addAttribute("singleMovie", movieController.findById(id));
+        return "singleMovie";
+    }
+
     @GetMapping("career")
     public String career() {
         return "career";
@@ -38,11 +48,6 @@ public class MvcController {
     @GetMapping("about-me")
     public String aboutMe() {
         return "aboutMe";
-    }
-
-    @GetMapping("soon")
-    public String soon() {
-        return "soon";
     }
 
     @GetMapping("my-tickets")

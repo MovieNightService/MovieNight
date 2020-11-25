@@ -42,11 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/fonts/**",
             "/js/**",
             "/images/**",
-            "/all-movies",      // to delete
-            "/soon",            // to delete
-            "/my-tickets",      // to delete
-            "/about-me",        // to delete
-            "/career"           // to delete
+            "/all-movies",
+            "/single-movies",
+            "/soon",
+            "/my-tickets",
+            "/about-me",
+            "/career"
     };
 
     public SecurityConfig(PasswordEncoder passwordEncoder, UserService userService) {

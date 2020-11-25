@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8">
     <title>Movie Night | Чат</title>
     <link rel="stylesheet" href="css/main.css"/>
 </head>
@@ -22,7 +23,7 @@
                         class="accent username-submit">
                     Вернуться
                 </button>
-                <button type="submit" class="accent username-submit">Войти в чат</button>
+                <button sec:authorize="isAuthenticated()" type="submit" class="accent username-submit">Войти в чат</button>
             </div>
         </form>
     </div>
