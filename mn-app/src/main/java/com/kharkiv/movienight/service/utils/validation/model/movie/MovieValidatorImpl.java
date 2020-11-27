@@ -46,7 +46,7 @@ public class MovieValidatorImpl implements Validator<Movie> {
             executeValidation(methodType, dto, movie);
 
         } else {
-            executeValidation(methodType,null, null);
+            executeValidation(methodType, null, null);
         }
     }
 
@@ -54,7 +54,14 @@ public class MovieValidatorImpl implements Validator<Movie> {
         switch (methodType) {
             case CREATE -> validateCreate(dto);
             case UPDATE -> validateUpdate(dto, movie);
+            case DELETE -> validateDelete(movie);
             default -> throw new BadRequestException("Incorrect METHOD_TYPE");
+        }
+    }
+
+    private void validateDelete(Movie movie) {
+        if (!movie.getEvents().isEmpty()) {
+            throw new BadRequestException("Movie used in Events");
         }
     }
 
@@ -71,7 +78,6 @@ public class MovieValidatorImpl implements Validator<Movie> {
 //            validateIssue(movieDto.getIssue());
             validateRating(movieDto.getRating());
             validateAge(movieDto.getAge());
-            validateTrailerUrl(movieDto.getTrailer());
         } else {
             throw new BadRequestException("DTO was not get or his type is incorrect");
         }
@@ -90,7 +96,6 @@ public class MovieValidatorImpl implements Validator<Movie> {
 //            validateIssue(movieDto.getIssue());
             validateRating(movieDto.getRating());
             validateAge(movieDto.getAge());
-            validateTrailerUrl(movieDto.getTrailer());
         } else {
             throw new BadRequestException("DTO was not get or his type is incorrect");
         }
@@ -129,26 +134,15 @@ public class MovieValidatorImpl implements Validator<Movie> {
     }
 
     private void validateRating(Double rating) {
-        if(rating != null && (rating <= 0.0 || rating > 10.0)){
+        if (rating != null && (rating <= 0.0 || rating > 10.0)) {
             throw new MovieRatingException();
         }
     }
 
     private void validateAge(Integer age) {
         // TODO: 10/10/20  age may be different It depend on a film and why here is MovieDurationException
-        if(age != null && (age <= 0 || age > 21)) {
+        if (age != null && (age <= 0 || age > 21)) {
             throw new MovieDurationException();
-        }
-    }
-
-    private void validateTrailerUrl(String trailer) {
-        String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
-        if (trailer == null){
-            return;
-        }
-
-        if(!trailer.matches(regex)){
-            throw new MovieTrailerUrlException();
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.kharkiv.movienight.controller;
+package com.kharkiv.movienight.controller.rest;
 
 import com.kharkiv.movienight.service.movie.MovieService;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;

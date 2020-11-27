@@ -14,10 +14,10 @@ public class MovieFindDto {
 
     private String name;
     private Integer duration;
-    private Instant issue;
+    private Integer issue;
     private Double rating;
     private String language;
     private String description;
     private Integer age;
-//    private Set<Genre> genre;
+    private String genre;
 }

@@ -82,11 +82,13 @@
             </column>
             <column name="name" type="varchar(255)"/>
             <column name="duration" type="int"/>
-            <column name="issue" type="timestamp"/>
+            <column name="issue" type="int"/>
             <column name="rating" type="double"/>
             <column name="language" type="varchar(255)"/>
+            <column name="image" type="BYTEA"/>
             <column name="description" type="varchar(255)"/>
             <column name="trailer" type="varchar(255)"/>
+            <column name="genre" type="varchar(255)"/>
             <column name="age" type="int"/>
         </createTable>
 
@@ -138,19 +140,10 @@
 
         </createTable>
 
-        <createTable tableName="movie_genre">
-            <column name="movie_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="movies_movie_id_fk" referencedTableName="movies"
-                             referencedColumnNames="id"/>
-            </column>
-            <column name="genre" type="varchar(255)"/>
-        </createTable>
-
         <loadData tableName="users" file="classpath:db.changelog/population/users.csv"/>
         <loadData tableName="user_authority" file="classpath:db.changelog/population/user_authority.csv"/>
 
         <loadData tableName="movies" file="classpath:db.changelog/population/movies.csv"/>
-        <loadData tableName="movie_genre" file="classpath:db.changelog/population/movie_genre.csv"/>
         <loadData tableName="events" file="classpath:db.changelog/population/events.csv"/>
         <loadData tableName="user_event" file="classpath:db.changelog/population/user_event.csv"/>
 

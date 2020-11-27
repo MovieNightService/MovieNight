@@ -42,9 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/fonts/**",
             "/js/**",
             "/images/**",
+            // MVC + Thymeleaf
             "/all-movies",
-            "/single-movies",
-            "/soon",
+            "/single-movie",
+            "/update-movie",
+            "/create-movie",
+            "/delete-movie",
             "/my-tickets",
             "/about-me",
             "/career"

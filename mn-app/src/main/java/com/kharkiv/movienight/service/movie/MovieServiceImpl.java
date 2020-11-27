@@ -27,6 +27,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -43,6 +46,8 @@ public class MovieServiceImpl implements MovieService {
     private MovieMapper movieMapper;
     private Validator<Movie> validator;
 
+    private final String IMAGE_PATH = "./mn-app/src/main/resources/static/images";
+
     @Override
     public Long create(MovieCreateDto dto) {
         User actor = getActorFromContext();
@@ -50,6 +55,7 @@ public class MovieServiceImpl implements MovieService {
         validator.validate(MethodType.CREATE, dto, null);
 
         Movie movie = movieMapper.toEntity(dto);
+        uploadFileToFileSystem(movie.getImage());
         movie.setCreatedBy(actor);
         movie.setUpdatedBy(actor);
 
@@ -72,7 +78,7 @@ public class MovieServiceImpl implements MovieService {
     public void delete(Long id) {
         Movie movie = findById(id);
 
-        validator.validate(MethodType.DELETE);
+        validator.validate(MethodType.DELETE, movie);
 
         movieRepository.delete(movie);
     }
@@ -91,10 +97,25 @@ public class MovieServiceImpl implements MovieService {
 
         validator.validate(MethodType.UPDATE, dto, movie);
 
+        if(!Arrays.equals(movie.getImage(),dto.getImage())){
+            uploadFileToFileSystem(movie.getImage());
+        }
         return movieMapper.toEntity(dto, movie).getId();
     }
 
-    private Specification<Movie> createSpecification(MovieFindDto finder){
+    private void uploadFileToFileSystem(byte[] file) {
+        if (file != null) {
+            try {
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(IMAGE_PATH)));
+                stream.write(file);
+                stream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Specification<Movie> createSpecification(MovieFindDto finder) {
         CustomSpecification<Movie> customSpecification = new CustomSpecification<>();
 
         List<SearchCriteria> criteriaList = Arrays.asList(
@@ -104,8 +125,8 @@ public class MovieServiceImpl implements MovieService {
                 new SearchCriteria("rating", finder.getRating(), SearchOperation.EQUAL),
                 new SearchCriteria("language", finder.getLanguage(), SearchOperation.MATCH),
                 new SearchCriteria("description", finder.getDescription(), SearchOperation.MATCH),
-                new SearchCriteria("age", finder.getAge(), SearchOperation.EQUAL)
-//                new SearchCriteria("genre", finder.getGenre(), SearchOperation.IN)
+                new SearchCriteria("age", finder.getAge(), SearchOperation.EQUAL),
+                new SearchCriteria("genre", finder.getGenre(), SearchOperation.MATCH)
         );
 
         criteriaList.stream()

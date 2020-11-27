@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
 <head>
     <title>MovieNight</title>
 
@@ -13,15 +13,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{css/templatemo-style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/owl.css}">
 </head>
-<style>
-    .container {
-        display: grid;
-        grid-template-columns: 100px 100px 100px;
-        grid-template-rows: 50px 50px;
-    }
-</style>
-<body class="is-preload">
-<div id="wrapper" onload="showMessage()">
+
+<body class="is-preload" onload="showMessage()">
+
+<div id="wrapper">
 
     <div id="main">
         <div class="inner">
@@ -42,32 +37,68 @@
             </div>
 
             <div sec:authorize="isAuthenticated()">
-                <div class="primary-button">
-                    <a th:href="@{create-movie}">Создать новый фильм</a>
-                </div>
                 <section class="left-image">
                     <div class="container-fluid">
-                        <tr th:each="movie : ${all_movies}">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img th:src="@{/images/movie1.jpg}"/>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="right-content">
-                                        <h4 style="color: white">
-                                            <td th:text="${movie.name}"></td>
-                                        </h4>
-                                        <p>
-                                        <td th:text="${movie.description}"></td>
-                                        </p>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="right-content">
+                                    <form action="#" th:action="@{/create-movie}" th:object="${movie}" method="post">
+                                        <h4 style="color: #dd2e37">Изображение:</h4>
+                                        <input id="image" type="file" th:field="*{image}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Название (уникально):</h4>
+                                        <input id="name" type="text" th:field="*{name}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Продолжительность:  (1 и больше минут)</h4>
+                                        <input id="duration" type="number" th:field="*{duration}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Возраст:</h4>
+                                        <input id="age" type="number" th:field="*{age}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Год выпуска:</h4>
+                                        <input id="issue" type="number" th:field="*{issue}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Рейтинг (от 0 до 10):</h4>
+                                        <input id="rating" type="text" th:field="*{rating}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Язык:</h4>
+                                        <input id="language" type="text" th:field="*{language}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Описание:</h4>
+                                        <input id="description" type="text" th:field="*{description}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Жанр (можно несколько и разделить через заяптую):</h4>
+                                        <input id="genre" type="text" th:field="*{genre}" required/>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <h4 style="color: #dd2e37">Трейлер:</h4>
+                                        <input id="trailer" type="text" th:field="*{trailer}" required/>
                                         <div class="primary-button">
-                                            <a th:href="@{single-movie(id=${movie.id})}">Подробнее..</a>
+                                            <a th:href="@{/all-movies}">Отменить</a>
+                                            <t><t></t></t>
+                                            <button type="submit">Создать</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                            <br><br>
-                        </tr>
+                        </div>
                     </div>
                 </section>
                 <script th:inline="javascript">
@@ -121,8 +152,8 @@
                     <li sec:authorize="hasAuthority('USER')"><a href="#">Кто пойдет со мной?</a></li>
 
                     <!--       MANAGER             -->
+                    <li sec:authorize="hasAuthority('MANAGER')"><a href="/all-movies">Все фильмы</a></li>
                     <li sec:authorize="hasAuthority('MANAGER')"><a href="#">Ползьователи по событию</a></li>
-                    <li sec:authorize="hasAuthority('MANAGER')"><a href="#">Все фильмы</a></li>
 
                     <!--       COMMON             -->
                     <li sec:authorize="isAuthenticated()"><a href="/about-me">Личный кабинет</a></li>
@@ -140,7 +171,12 @@
 <script th:src="@{../static/js/breakpoints.min.js}"></script>
 <script th:src="@{../static/js/transition.js}"></script>
 <script th:src="@{../static/js/owl-carousel.js}"></script>
-<script th:src="@{../static/js/custom.js}"></script>
+<script th:src="@{../static/js/custom.js}"></script>>
+<script>
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
 </body>
 
 </html>

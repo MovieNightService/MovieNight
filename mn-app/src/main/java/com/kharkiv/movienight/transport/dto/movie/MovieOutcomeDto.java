@@ -14,13 +14,13 @@ public class MovieOutcomeDto {
     private Long id;
     private String name;
     private Integer duration;
-    private Instant issue;
+    private Integer issue;
     private Double rating;
     private String language;
     private String description;
     private String trailer;
     private Integer age;
-    private Set<Genre> genre;
+    private String genre;
     private Long createdBy;
     private Instant createdAt;
     private Long updatedBy;

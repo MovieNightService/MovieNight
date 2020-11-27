@@ -16,6 +16,7 @@ public class MovieUpdateDto {
     private String description;
     private String trailer;
     private Integer age;
+    private byte[] image;
 
     @NotBlank
     @NotNull
@@ -29,11 +30,11 @@ public class MovieUpdateDto {
     private Integer duration;
 
     @NotNull
-    private Instant issue;
+    private Integer issue;
 
     @NotNull
     private Double rating;
 
     @NotNull
-    private Set<Genre> genre;
+    private String genre;
 }
