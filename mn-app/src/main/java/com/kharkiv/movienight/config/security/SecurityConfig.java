@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/update-movie",
             "/create-movie",
             "/delete-movie",
+            "/upload-image",
             "/my-tickets",
             "/about-me",
             "/career"

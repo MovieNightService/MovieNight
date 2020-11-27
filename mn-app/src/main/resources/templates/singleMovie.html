@@ -35,61 +35,65 @@
             </div>
 
             <div sec:authorize="isAuthenticated()">
+                <div class="primary-button">
+                    <a th:href="@{/all-movies}">Вернуться</a>
+                </div>
                 <section class="left-image">
                     <div class="container-fluid">
                         <tr th:each="movie : ${singleMovie}">
                             <div class="row">
                                 <div class="col-md-8">
-<!--                                    <img th:src="@{singleMovie.image}"/>-->
-                                    <img th:src="*{'data:image/jpeg;base64,'+ image}" alt="#" />
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="right-content">
-                                        <br>
-                                        <br>
-                                        <h2 style="color: white">
-                                            <td th:text="${singleMovie.name}"></td>
-                                        </h2>
-                                        <p>Продолжительность:
-                                        <td th:text="${singleMovie.duration}"></td>
-                                        мин</p>
-                                        <p>Возраст:
-                                        <td th:text="${singleMovie.age}"></td>
-                                        +</p>
-                                        <p>Год выпуска:
-                                        <td th:text="${singleMovie.issue}"></td>
-                                        </p>
-                                        <p>Рейтинг:
-                                        <td th:text="${singleMovie.rating}"></td>
-                                        /10.0</p>
-                                        <p>Язык:
-                                        <td th:text="${singleMovie.language}"></td>
-                                        </p>
-                                        <p>Описание:
-                                        <td th:text="${singleMovie.description}"></td>
-                                        </p>
-                                        <p>Трейлер: </p>
-                                        <td>
-                                            <iframe width="420" height="315"
-                                                    th:src="'https://www.youtube.com/embed/' + ${singleMovie.trailer}"></iframe>
-                                        </td>
-                                        <br>
-                                        <div class="primary-button">
-                                            <a th:href="@{/all-movies}">Вернуться</a>
-                                            <t>
-                                                <t></t>
-                                            </t>
-                                            <a th:href="@{delete-movie(id=${singleMovie.id})}">Удалить</a>
-                                            <t>
-                                                <t></t>
-                                            </t>
-                                            <a th:href="@{update-movie(id=${singleMovie.id})}">Изменить</a>
+                                    <img th:src="@{'/images/uploaded/' + ${singleMovie.image}}" th:height="440" th:width="625"/>
+                                    <div class="col-md-9">
+                                        <div class="right-content">
+                                            <br>
+                                            <br>
+                                            <h2 style="color: white">
+                                                <td th:text="${singleMovie.name}"></td>
+                                            </h2>
+                                            <p>Продолжительность:
+                                            <td th:text="${singleMovie.duration}"></td>
+                                            мин</p>
+                                            <p>Возраст:
+                                            <td th:text="${singleMovie.age}"></td>
+                                            +</p>
+                                            <p>Год выпуска:
+                                            <td th:text="${singleMovie.issue}"></td>
+                                            </p>
+                                            <p>Рейтинг:
+                                            <td th:text="${singleMovie.rating}"></td>
+                                            /10.0</p>
+                                            <p>Язык:
+                                            <td th:text="${singleMovie.language}"></td>
+                                            </p>
+                                            <p>Описание:
+                                            <td th:text="${singleMovie.description}"></td>
+                                            </p>
+                                            <p>Жанр:
+                                            <td th:text="${singleMovie.genre}"></td>
+                                            </p>
+                                            <p>Трейлер: </p>
+                                            <td>
+                                                <iframe width="420" height="315"
+                                                        th:src="'https://www.youtube.com/embed/' + ${singleMovie.trailer}"></iframe>
+                                            </td>
+                                            <br>
+                                            <div class="primary-button">
+                                                <a th:href="@{delete-movie(id=${singleMovie.id})}">Удалить</a>
+                                                <t>
+                                                    <t></t>
+                                                </t>
+                                                <a th:href="@{upload-image(id=${singleMovie.id})}">Загрузить изображение</a>
+                                                <t>
+                                                    <t></t>
+                                                </t>
+                                                <a th:href="@{update-movie(id=${singleMovie.id})}">Изменить</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <br>
-                            <br>
+                                <br>
+                                <br>
                         </tr>
                     </div>
                 </section>

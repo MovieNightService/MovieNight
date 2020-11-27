@@ -2,10 +2,7 @@ package com.kharkiv.movienight.service.movie;
 
 import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.service.utils.actor.ActorService;
-import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
+import com.kharkiv.movienight.transport.dto.movie.*;
 import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 
 import java.util.List;
@@ -23,4 +20,6 @@ public interface MovieService extends ActorService {
     List<MovieOutcomeDto> findAll(MovieFindDto finder, PageableDto pageable);
 
     Long update(Long id, MovieUpdateDto dto);
+
+    void uploadImage(Long id, MovieImageUploadDto dto);
 }

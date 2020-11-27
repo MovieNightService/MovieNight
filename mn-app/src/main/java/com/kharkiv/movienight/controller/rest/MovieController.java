@@ -1,10 +1,7 @@
 package com.kharkiv.movienight.controller.rest;
 
 import com.kharkiv.movienight.service.movie.MovieService;
-import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
+import com.kharkiv.movienight.transport.dto.movie.*;
 import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,12 +23,12 @@ public class MovieController {
     @PostMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "createMovie", nickname = "createMovie")
-    public Long create(@Valid @RequestBody MovieCreateDto dto){
+    public Long create(@Valid @RequestBody MovieCreateDto dto) {
         return movieService.create(dto);
     }
 
     @GetMapping("{id}")
-    @PreAuthorize(value= "hasAnyAuthority('ADMIN', 'MANAGER')")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "findByIdMovie", nickname = "findByIdMovie")
     public MovieOutcomeDto findById(@PathVariable Long id) {
         return movieService.findByIdUnsafe(id);
@@ -39,22 +36,29 @@ public class MovieController {
 
     @DeleteMapping("delete/{id}")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
-    @ApiOperation(value="deleteMovie", nickname = "deleteMovie")
-    public void delete(@PathVariable Long id){
+    @ApiOperation(value = "deleteMovie", nickname = "deleteMovie")
+    public void delete(@PathVariable Long id) {
         movieService.delete(id);
     }
 
     @GetMapping
     @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'MANAGER')")
     @ApiOperation(value = "findAllMovies", nickname = "findAllMovies")
-    public List<MovieOutcomeDto> findAll(MovieFindDto finder, PageableDto pageable){
+    public List<MovieOutcomeDto> findAll(MovieFindDto finder, PageableDto pageable) {
         return movieService.findAll(finder, pageable);
     }
 
     @PutMapping("/update/{id}")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
     @ApiOperation(value = "updateMovie", nickname = "updateMovie")
-    public Long update(@PathVariable Long id, @Valid @RequestBody MovieUpdateDto dto){
+    public Long update(@PathVariable Long id, @Valid @RequestBody MovieUpdateDto dto) {
         return movieService.update(id, dto);
+    }
+
+    @PutMapping("/upload-image/{id}")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN')")
+    @ApiOperation(value = "uploadImage", nickname = "uploadImage")
+    public void uploadImage(@PathVariable Long id, @Valid @RequestBody MovieImageUploadDto dto) {
+        movieService.uploadImage(id, dto);
     }
 }

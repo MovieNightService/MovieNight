@@ -24,7 +24,8 @@
             pdf
             qr
   ~~~
-  2. Configure _database_ with credentials **user: postgres / password: root** and in public schema open _console_ and run script:
+  2. Create folder in your local disc `uploaded-docs`
+  3. Configure _database_ with credentials **user: postgres / password: root** and in public schema open _console_ and run script:
   `create database movie_night;`
   
 ### Getting started guide:

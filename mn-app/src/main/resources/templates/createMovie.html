@@ -37,62 +37,58 @@
             </div>
 
             <div sec:authorize="isAuthenticated()">
+                <div class="primary-button">
+                    <a th:href="@{/all-movies}">Вернуться</a>
+                </div>
                 <section class="left-image">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="right-content">
                                     <form action="#" th:action="@{/create-movie}" th:object="${movie}" method="post">
-                                        <h4 style="color: #dd2e37">Изображение:</h4>
-                                        <input id="image" type="file" th:field="*{image}" required/>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <h4 style="color: #dd2e37">Название (уникально):</h4>
+                                        <h4 style="color: #ae3c2c">Название (уникально):</h4>
                                         <input id="name" type="text" th:field="*{name}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Продолжительность:  (1 и больше минут)</h4>
+                                        <h4 style="color: #ae3c2c">Продолжительность:  (1 и больше минут)</h4>
                                         <input id="duration" type="number" th:field="*{duration}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Возраст:</h4>
+                                        <h4 style="color: #ae3c2c">Возраст:</h4>
                                         <input id="age" type="number" th:field="*{age}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Год выпуска:</h4>
+                                        <h4 style="color: #ae3c2c">Год выпуска:</h4>
                                         <input id="issue" type="number" th:field="*{issue}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Рейтинг (от 0 до 10):</h4>
+                                        <h4 style="color: #ae3c2c">Рейтинг (от 0 до 10):</h4>
                                         <input id="rating" type="text" th:field="*{rating}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Язык:</h4>
+                                        <h4 style="color: #ae3c2c">Язык:</h4>
                                         <input id="language" type="text" th:field="*{language}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Описание:</h4>
+                                        <h4 style="color: #ae3c2c">Описание:</h4>
                                         <input id="description" type="text" th:field="*{description}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Жанр (можно несколько и разделить через заяптую):</h4>
+                                        <h4 style="color: #ae3c2c">Жанр (можно несколько и разделить через заяптую):</h4>
                                         <input id="genre" type="text" th:field="*{genre}" required/>
                                         <br>
                                         <br>
                                         <br>
-                                        <h4 style="color: #dd2e37">Трейлер:</h4>
+                                        <h4 style="color: #ae3c2c">Трейлер:</h4>
                                         <input id="trailer" type="text" th:field="*{trailer}" required/>
                                         <div class="primary-button">
-                                            <a th:href="@{/all-movies}">Отменить</a>
-                                            <t><t></t></t>
                                             <button type="submit">Создать</button>
                                         </div>
                                     </form>

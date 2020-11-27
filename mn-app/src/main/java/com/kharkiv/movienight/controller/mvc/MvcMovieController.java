@@ -1,9 +1,11 @@
 package com.kharkiv.movienight.controller.mvc;
 
+import com.kharkiv.movienight.exception.standard.BadRequestException;
 import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.service.movie.MovieService;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
+import com.kharkiv.movienight.transport.dto.movie.MovieImageUploadDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
 import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import lombok.Setter;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @Setter(onMethod_ = @Autowired)
@@ -36,12 +40,6 @@ public class MvcMovieController {
         Movie singleMovie = movieService.findById(id);
         model.addAttribute("singleMovie", singleMovie);
         model.addAttribute("error", "");
-
-
-        byte[] encodeBase64 = Base64.getEncoder().encode(singleMovie.getImage());
-        model.addAttribute("image", new String(encodeBase64, StandardCharsets.UTF_8));
-
-
         return "singleMovie";
     }
 
@@ -57,6 +55,37 @@ public class MvcMovieController {
         model.addAttribute("movie", new MovieCreateDto());
         model.addAttribute("error", "");
         return "createMovie";
+    }
+
+    @GetMapping("upload-image")
+    public String uploadImageGetTemplate(@RequestParam Long id, Model model) {
+        model.addAttribute("movie", movieService.findById(id));
+        model.addAttribute("file", new byte[]{});
+        model.addAttribute("error", "");
+        return "uploadImageMovie";
+    }
+
+    @PostMapping("upload-image")
+    public String uploadImage(@RequestParam Long id, @RequestParam MultipartFile file) {
+        try {
+            final String IMAGE_PATH = "./mn-app/src/main/resources/static/images/uploaded/";
+
+            if (file.isEmpty()) {
+                throw new BadRequestException("File is required");
+            }
+
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(IMAGE_PATH + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+        } catch (Throwable ex) {
+            return "redirect:/upload-image?id=" + id + "&error";
+        }
+
+        MovieImageUploadDto dto = new MovieImageUploadDto();
+        dto.setImage(file.getOriginalFilename());
+        movieService.uploadImage(id, dto);
+        return "redirect:/single-movie?id=" + id + "&success";
     }
 
     @PostMapping("update-movie")

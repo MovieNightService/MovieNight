@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="EN">
 <head>
     <title>MovieNight</title>
 
@@ -13,15 +13,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{css/templatemo-style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/owl.css}">
 </head>
-<style>
-    .container {
-        display: grid;
-        grid-template-columns: 100px 100px 100px;
-        grid-template-rows: 50px 50px;
-    }
-</style>
-<body class="is-preload">
-<div id="wrapper" onload="showMessage()">
+
+<body class="is-preload" onload="showMessage()">
+
+<div id="wrapper">
 
     <div id="main">
         <div class="inner">
@@ -43,31 +38,28 @@
 
             <div sec:authorize="isAuthenticated()">
                 <div class="primary-button">
-                    <a th:href="@{create-movie}">Создать новый фильм</a>
+                    <a th:href="@{/single-movie(id=${movie.id})}">Вернуться</a>
                 </div>
                 <section class="left-image">
                     <div class="container-fluid">
-                        <tr th:each="movie : ${all_movies}">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img th:src="@{'/images/uploaded/' + ${movie.image}}" th:height="215" th:width="320"/>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="right-content">
-                                        <h4 style="color: white">
-                                            <td th:text="${movie.name}"></td>
-                                        </h4>
-                                        <p>
-                                        <td th:text="${movie.description}"></td>
-                                        </p>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="right-content">
+                                    <form th:action="@{/upload-image(id=${movie.id})}" th:object="${movie}" enctype="multipart/form-data" method="post">
+                                        <h4 style="color: #ae3c2c">Изображение:</h4>
+                                        <input type="file" name="file"/><br/><br/>
+                                        <br>
+                                        <br>
+                                        <br>
                                         <div class="primary-button">
-                                            <a th:href="@{single-movie(id=${movie.id})}">Подробнее..</a>
+                                            <a th:href="@{update-movie(id=${movie.id})}">Отменить</a>
+                                            <t><t></t></t>
+                                            <button type="submit">Загрузить</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                            <br><br>
-                        </tr>
+                        </div>
                     </div>
                 </section>
                 <script th:inline="javascript">
@@ -135,12 +127,6 @@
     </div>
 
 </div>
-
-<script th:src="@{../static/js/browser.min.js}"></script>
-<script th:src="@{../static/js/breakpoints.min.js}"></script>
-<script th:src="@{../static/js/transition.js}"></script>
-<script th:src="@{../static/js/owl-carousel.js}"></script>
-<script th:src="@{../static/js/custom.js}"></script>
 </body>
 
 </html>

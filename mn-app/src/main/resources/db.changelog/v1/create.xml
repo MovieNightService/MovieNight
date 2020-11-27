@@ -85,7 +85,7 @@
             <column name="issue" type="int"/>
             <column name="rating" type="double"/>
             <column name="language" type="varchar(255)"/>
-            <column name="image" type="BYTEA"/>
+            <column name="image" type="varchar(1000)"/>
             <column name="description" type="varchar(255)"/>
             <column name="trailer" type="varchar(255)"/>
             <column name="genre" type="varchar(255)"/>

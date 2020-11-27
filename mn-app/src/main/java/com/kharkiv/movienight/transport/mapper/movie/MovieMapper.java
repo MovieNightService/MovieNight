@@ -2,6 +2,7 @@ package com.kharkiv.movienight.transport.mapper.movie;
 
 import com.kharkiv.movienight.persistence.model.movie.Movie;
 import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
+import com.kharkiv.movienight.transport.dto.movie.MovieImageUploadDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
 import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
 import org.mapstruct.Mapper;
@@ -23,4 +24,6 @@ public abstract class MovieMapper {
     public abstract MovieOutcomeDto toDto(Movie movie);
 
     public abstract Movie toEntity(MovieUpdateDto dto, @MappingTarget Movie movie);
+
+    public abstract Movie toEntity(MovieImageUploadDto dto, @MappingTarget Movie movie);
 }

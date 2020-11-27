@@ -21,6 +21,7 @@ public class MovieOutcomeDto {
     private String trailer;
     private Integer age;
     private String genre;
+    private String image;
     private Long createdBy;
     private Instant createdAt;
     private Long updatedBy;

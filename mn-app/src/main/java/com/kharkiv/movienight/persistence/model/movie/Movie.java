@@ -26,7 +26,7 @@ public class Movie extends IdCreatedUpdatedEntity {
     private String trailer;
     private Integer age;
     private String genre;
-    private byte[] image;
+    private String image;
 
     @OneToMany(
             fetch = FetchType.LAZY,

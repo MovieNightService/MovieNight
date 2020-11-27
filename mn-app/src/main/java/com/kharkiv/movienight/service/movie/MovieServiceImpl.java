@@ -13,10 +13,7 @@ import com.kharkiv.movienight.service.utils.specification.SearchOperation;
 import com.kharkiv.movienight.service.utils.validation.type.MethodType;
 import com.kharkiv.movienight.service.utils.validation.validator.Validator;
 import com.kharkiv.movienight.transport.dto.event.EventFindDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieCreateDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieFindDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieOutcomeDto;
-import com.kharkiv.movienight.transport.dto.movie.MovieUpdateDto;
+import com.kharkiv.movienight.transport.dto.movie.*;
 import com.kharkiv.movienight.transport.dto.pageable.PageableDto;
 import com.kharkiv.movienight.transport.mapper.movie.MovieMapper;
 import lombok.Setter;
@@ -25,11 +22,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -46,8 +48,6 @@ public class MovieServiceImpl implements MovieService {
     private MovieMapper movieMapper;
     private Validator<Movie> validator;
 
-    private final String IMAGE_PATH = "./mn-app/src/main/resources/static/images";
-
     @Override
     public Long create(MovieCreateDto dto) {
         User actor = getActorFromContext();
@@ -55,7 +55,6 @@ public class MovieServiceImpl implements MovieService {
         validator.validate(MethodType.CREATE, dto, null);
 
         Movie movie = movieMapper.toEntity(dto);
-        uploadFileToFileSystem(movie.getImage());
         movie.setCreatedBy(actor);
         movie.setUpdatedBy(actor);
 
@@ -97,22 +96,13 @@ public class MovieServiceImpl implements MovieService {
 
         validator.validate(MethodType.UPDATE, dto, movie);
 
-        if(!Arrays.equals(movie.getImage(),dto.getImage())){
-            uploadFileToFileSystem(movie.getImage());
-        }
         return movieMapper.toEntity(dto, movie).getId();
     }
 
-    private void uploadFileToFileSystem(byte[] file) {
-        if (file != null) {
-            try {
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(IMAGE_PATH)));
-                stream.write(file);
-                stream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    @Override
+    public void uploadImage(Long id, MovieImageUploadDto dto) {
+        Movie movie = findById(id);
+        movieMapper.toEntity(dto, movie);
     }
 
     private Specification<Movie> createSpecification(MovieFindDto finder) {
