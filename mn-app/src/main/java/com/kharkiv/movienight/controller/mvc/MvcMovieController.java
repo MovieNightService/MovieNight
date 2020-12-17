@@ -68,7 +68,8 @@ public class MvcMovieController {
     @PostMapping("upload-image")
     public String uploadImage(@RequestParam Long id, @RequestParam MultipartFile file) {
         try {
-            final String IMAGE_PATH = "./mn-app/src/main/resources/static/images/uploaded/";
+//            final String IMAGE_PATH = "./mn-app/src/main/resources/static/images/uploaded/";
+            final String IMAGE_PATH = "./mn-app/src/main/resources/uploaded/";
 
             if (file.isEmpty()) {
                 throw new BadRequestException("File is required");

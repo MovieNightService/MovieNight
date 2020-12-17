@@ -43,7 +43,7 @@
                         <tr th:each="movie : ${singleMovie}">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <img th:src="@{'/images/uploaded/' + ${singleMovie.image}}" th:height="440" th:width="625"/>
+<!--                                    <img th:src="@{'/resources/uploaded/' + ${singleMovie.image}}" th:height="440" th:width="625"/>-->
                                     <div class="col-md-9">
                                         <div class="right-content">
                                             <br>
@@ -83,10 +83,10 @@
                                                 <t>
                                                     <t></t>
                                                 </t>
-                                                <a th:href="@{upload-image(id=${singleMovie.id})}">Загрузить изображение</a>
-                                                <t>
-                                                    <t></t>
-                                                </t>
+<!--                                                <a th:href="@{upload-image(id=${singleMovie.id})}">Загрузить изображение</a>-->
+<!--                                                <t>-->
+<!--                                                    <t></t>-->
+<!--                                                </t>-->
                                                 <a th:href="@{update-movie(id=${singleMovie.id})}">Изменить</a>
                                             </div>
                                         </div>
