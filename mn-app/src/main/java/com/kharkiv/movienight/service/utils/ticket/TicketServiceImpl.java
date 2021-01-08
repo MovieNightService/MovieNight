@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
                 event.getDate(),
                 PDF_PATH_FOR_MAIL,
                 user.getEmail(),
-                "Registration for event",
+                "Регистрация на Кино-вечер",
                 "emailNotificationBuyTicket"
         );
 
@@ -63,7 +63,7 @@ public class TicketServiceImpl implements TicketService {
         Document document = new Document();
 
         String path = QR_PATH + actor.getId() + "_" + event.getId() + ".png";
-        String text = "Secured by MovieNight team! Event: " + event.getName() + "! User: " + actor.getUsername();
+        String text = "Безопасно MovieNight! Событие: " + event.getName() + "! Пользователь: " + actor.getUsername();
 
         generateQRCodeImage(text, path);
 
