@@ -1,5 +1,9 @@
 rootProject.name = 'MovieNight'
 include 'mn-app'
 include 'mn-chat'
-include 'discovery-server'
+include 'mn-payment'
+include 'mn-foundation'
+include 'mn-discovery'
+include 'mn-auth'
+include 'mn-config'
 

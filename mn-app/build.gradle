@@ -31,6 +31,7 @@ repositories {
 }
 
 dependencies {
+    implementation project (":mn-foundation")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -56,7 +57,6 @@ dependencies {
     compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.15'
     compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
-    //    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '2.2.5.RELEASE'
 
     annotationProcessor('org.projectlombok:lombok')
     annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
