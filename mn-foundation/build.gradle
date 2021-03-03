@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+}
+
+group 'com.movienight'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+apply from: '../versions.gradle'
+
+compileJava {
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.unmappedTargetPolicy=IGNORE'
+    ]
+}
+
+dependencies {
+    implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:2.2.4.RELEASE'
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.3.3.RELEASE'
+
+    compile 'org.projectlombok:lombok:1.18.12'
+    compile 'org.hibernate:hibernate-validator:6.0.13.Final'
+    compile 'joda-time:joda-time:2.10'
+    compile 'org.springframework:spring-context-support:5.2.5.RELEASE'
+    compile 'com.google.zxing:javase:3.3.0'
+    compile 'com.google.zxing:core:3.3.0'
+
+    annotationProcessor('org.projectlombok:lombok:1.18.12')
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
