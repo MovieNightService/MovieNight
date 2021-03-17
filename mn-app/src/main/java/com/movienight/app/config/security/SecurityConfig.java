@@ -1,8 +1,11 @@
 package com.movienight.app.config.security;
 
 import com.movienight.app.service.user.UserService;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         jsr250Enabled = true
 )
 @EnableWebSecurity
+@EnableJpaRepositories("com.movienight.foundation.persistence.repository")
+@EntityScan("com.movienight.foundation.persistence.model")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -41,17 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/vendor/**",
             "/fonts/**",
             "/js/**",
-            "/images/**",
-            // MVC + Thymeleaf
-            "/all-movies",
-            "/single-movie",
-            "/update-movie",
-            "/create-movie",
-            "/delete-movie",
-            "/upload-image",
-            "/my-tickets",
-            "/about-me",
-            "/career"
+            "/images/**"
     };
 
     public SecurityConfig(PasswordEncoder passwordEncoder, UserService userService) {

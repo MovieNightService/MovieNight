@@ -3,7 +3,7 @@ package com.movienight.app.service.movie;
 import com.movienight.app.service.utils.mapper.movie.MovieMapper;
 import com.movienight.app.service.utils.validation.type.MethodType;
 import com.movienight.app.service.utils.validation.validator.Validator;
-import com.movienight.app.exception.movie.MovieNotFoundException;
+import com.movienight.app.exception.model.movie.MovieNotFoundException;
 import com.movienight.app.service.utils.pageable.PageableService;
 import com.movienight.app.service.utils.specification.CustomSpecification;
 import com.movienight.app.service.utils.specification.SearchCriteria;

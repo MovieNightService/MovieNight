@@ -6,6 +6,7 @@ import com.movienight.foundation.dto.pageable.PageableDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("movies")
 @RequiredArgsConstructor
 @Api(value = "Movie Service", description = "REST API for Movie", tags = {"Movie"})
+@RefreshScope
 public class MovieController {
 
     private final MovieService movieService;

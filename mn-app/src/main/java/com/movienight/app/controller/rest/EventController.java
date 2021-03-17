@@ -9,6 +9,7 @@ import com.movienight.foundation.dto.pageable.PageableDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @RequestMapping("events")
 @RequiredArgsConstructor
 @Api(value = "Event Service", description = "REST API for Event", tags = {"Event"})
+@RefreshScope
 public class EventController {
 
     private final EventService eventService;

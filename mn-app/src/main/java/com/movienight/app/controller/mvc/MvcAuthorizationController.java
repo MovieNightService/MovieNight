@@ -1,9 +1,11 @@
 package com.movienight.app.controller.mvc;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@RefreshScope
 public class MvcAuthorizationController {
 
     @GetMapping

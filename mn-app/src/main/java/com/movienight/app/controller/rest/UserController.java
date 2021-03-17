@@ -6,6 +6,7 @@ import com.movienight.foundation.dto.user.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("users")
 @RequiredArgsConstructor
 @Api(value = "User Service", description = "REST API for User", tags = {"User"})
+@RefreshScope
 public class UserController {
 
     private final UserService userService;

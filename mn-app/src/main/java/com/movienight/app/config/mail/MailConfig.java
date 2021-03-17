@@ -11,8 +11,6 @@ import java.util.Properties;
 @Component
 public class MailConfig {
 
-    private static final String JAVA_MAIL_FILE = "classpath:mail/javamail.properties";
-
     @Value("${spring.mail.username}")
     private String username;
 

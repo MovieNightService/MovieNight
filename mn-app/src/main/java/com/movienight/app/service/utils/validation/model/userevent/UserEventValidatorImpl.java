@@ -1,7 +1,7 @@
 package com.movienight.app.service.utils.validation.model.userevent;
 
-import com.movienight.app.exception.common.BadRequestException;
-import com.movienight.app.exception.common.ForbiddenException;
+import com.movienight.app.exception.global.BadRequestException;
+import com.movienight.app.exception.global.ForbiddenException;
 import com.movienight.app.service.event.EventService;
 import com.movienight.app.service.utils.validation.type.MethodType;
 import com.movienight.app.service.utils.validation.validator.Validator;

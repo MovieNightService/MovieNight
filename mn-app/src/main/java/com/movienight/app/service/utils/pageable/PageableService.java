@@ -1,6 +1,6 @@
 package com.movienight.app.service.utils.pageable;
 
-import com.movienight.app.exception.common.BadRequestException;
+import com.movienight.app.exception.global.BadRequestException;
 import com.movienight.foundation.dto.pageable.PageableDto;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

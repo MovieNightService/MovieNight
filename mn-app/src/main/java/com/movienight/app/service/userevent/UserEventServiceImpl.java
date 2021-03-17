@@ -1,6 +1,6 @@
 package com.movienight.app.service.userevent;
 
-import com.movienight.app.exception.userevent.UserEventNotFoundException;
+import com.movienight.app.exception.model.userevent.UserEventNotFoundException;
 import com.movienight.app.service.event.EventService;
 import com.movienight.app.service.utils.mapper.userevent.UserEventMapper;
 import com.movienight.app.service.user.UserService;

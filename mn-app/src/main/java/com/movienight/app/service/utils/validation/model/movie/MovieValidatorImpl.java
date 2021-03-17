@@ -1,10 +1,10 @@
 package com.movienight.app.service.utils.validation.model.movie;
 
-import com.movienight.app.exception.movie.MovieDurationException;
-import com.movienight.app.exception.movie.MovieIssueInvalidException;
-import com.movienight.app.exception.movie.MovieRatingException;
-import com.movienight.app.exception.movie.MovieWithSuchNameAlreadyExistsException;
-import com.movienight.app.exception.common.BadRequestException;
+import com.movienight.app.exception.model.movie.MovieDurationException;
+import com.movienight.app.exception.model.movie.MovieIssueInvalidException;
+import com.movienight.app.exception.model.movie.MovieRatingException;
+import com.movienight.app.exception.model.movie.MovieWithSuchNameAlreadyExistsException;
+import com.movienight.app.exception.global.BadRequestException;
 import com.movienight.app.service.utils.validation.type.MethodType;
 import com.movienight.app.service.utils.validation.validator.Validator;
 import com.movienight.foundation.dto.movie.MovieCreateDto;

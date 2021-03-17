@@ -1,6 +1,6 @@
 package com.movienight.app.service.utils.validation.model.event;
 
-import com.movienight.app.exception.common.BadRequestException;
+import com.movienight.app.exception.global.BadRequestException;
 import com.movienight.app.service.utils.actor.RoleUtils;
 import com.movienight.app.service.utils.validation.type.MethodType;
 import com.movienight.app.service.utils.validation.validator.Validator;

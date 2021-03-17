@@ -1,10 +1,10 @@
 package com.movienight.app.exception;
 
-import com.movienight.app.exception.event.EventNotFoundException;
-import com.movienight.app.exception.movie.*;
-import com.movienight.app.exception.common.BadRequestException;
-import com.movienight.app.exception.user.*;
-import com.movienight.app.exception.userevent.UserEventNotFoundException;
+import com.movienight.app.exception.model.movie.*;
+import com.movienight.app.exception.model.user.*;
+import com.movienight.app.exception.global.BadRequestException;
+import com.movienight.app.exception.model.event.EventNotFoundException;
+import com.movienight.app.exception.model.userevent.UserEventNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

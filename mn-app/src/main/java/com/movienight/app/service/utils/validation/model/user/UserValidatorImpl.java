@@ -1,8 +1,8 @@
 package com.movienight.app.service.utils.validation.model.user;
 
-import com.movienight.app.exception.common.BadRequestException;
-import com.movienight.app.exception.common.ForbiddenException;
-import com.movienight.app.exception.user.*;
+import com.movienight.app.exception.global.BadRequestException;
+import com.movienight.app.exception.global.ForbiddenException;
+import com.movienight.app.exception.model.user.*;
 import com.movienight.app.service.utils.validation.type.MethodType;
 import com.movienight.app.service.utils.validation.validator.Validator;
 import com.movienight.foundation.dto.user.UserRegistrationDto;
@@ -61,32 +61,15 @@ public class UserValidatorImpl implements Validator<User> {
 
     public void executeValidation(MethodType methodType, User actor, Object dto, User user) {
         switch (methodType) {
-            case REGISTRATION:
-                validateRegistration(dto);
-                break;
-            case UPDATE:
-                validateUpdate(actor, dto, user);
-                break;
-            case DELETE:
-                validateDelete(actor, user);
-                break;
-            case RESTORE:
-                validateRestore(actor, user);
-                break;
-            case UPDATE_EMAIL:
-                validateUpdateEmail(actor, dto, user);
-                break;
-            case RESET_PASSWORD:
-                validateResetPassword(actor, dto);
-                break;
-            case UPLOAD_AVATAR:
-                validateUploadAvatar(dto);
-                break;
-            case AGREEMENT:
-                validateAgreement(actor, user);
-                break;
-            default:
-                throw new BadRequestException("Incorrect METHOD_TYPE");
+            case REGISTRATION -> validateRegistration(dto);
+            case UPDATE -> validateUpdate(actor, dto, user);
+            case DELETE -> validateDelete(actor, user);
+            case RESTORE -> validateRestore(actor, user);
+            case UPDATE_EMAIL -> validateUpdateEmail(actor, dto, user);
+            case RESET_PASSWORD -> validateResetPassword(actor, dto);
+            case UPLOAD_AVATAR -> validateUploadAvatar(dto);
+            case AGREEMENT -> validateAgreement(actor, user);
+            default -> throw new BadRequestException("Incorrect METHOD_TYPE");
         }
     }
 

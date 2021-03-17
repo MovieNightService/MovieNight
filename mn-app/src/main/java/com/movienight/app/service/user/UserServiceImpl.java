@@ -1,7 +1,7 @@
 package com.movienight.app.service.user;
 
-import com.movienight.app.exception.user.UploadAvatarException;
-import com.movienight.app.exception.user.UserNotFoundException;
+import com.movienight.app.exception.model.user.UploadAvatarException;
+import com.movienight.app.exception.model.user.UserNotFoundException;
 import com.movienight.app.service.utils.mapper.user.UserMapper;
 import com.movienight.app.service.utils.validation.type.MethodType;
 import com.movienight.app.service.utils.validation.validator.Validator;

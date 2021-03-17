@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      name: movienight-application
+      uri: http://localhost:8888
+      enabled: true
+      label: main 

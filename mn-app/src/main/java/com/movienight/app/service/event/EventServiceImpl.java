@@ -1,6 +1,6 @@
 package com.movienight.app.service.event;
 
-import com.movienight.app.exception.event.EventNotFoundException;
+import com.movienight.app.exception.model.event.EventNotFoundException;
 import com.movienight.app.service.utils.mapper.event.EventMapper;
 import com.movienight.app.service.user.UserService;
 import com.movienight.app.service.utils.validation.type.MethodType;

@@ -8,6 +8,7 @@ import com.movienight.foundation.dto.userevent.UserEventOutcomeDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping("user-events")
 @RequiredArgsConstructor
 @Api(value = "User-Event Service", description = "REST API for UserEvent", tags = {"UserEvent"})
+@RefreshScope
 public class UserEventController {
 
     private final UserEventService userEventService;
