@@ -1,9 +1,0 @@
-server:
-  port: 8081
-spring:
-  application:
-    name: movienight-application
-eureka:
-  client:
-    registerWithEureka: false
-    fetchRegistry: false

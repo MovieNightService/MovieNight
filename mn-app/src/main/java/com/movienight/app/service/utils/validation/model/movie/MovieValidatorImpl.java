@@ -78,9 +78,7 @@ public class MovieValidatorImpl implements Validator<Movie> {
         if (movieDto != null) {
             validateExistsByName(movieDto.getName());
             validateDuration(movieDto.getDuration());
-//            validateIssue(movieDto.getIssue());
             validateRating(movieDto.getRating());
-            validateAge(movieDto.getAge());
         } else {
             throw new BadRequestException("DTO was not get or his type is incorrect");
         }
@@ -96,9 +94,7 @@ public class MovieValidatorImpl implements Validator<Movie> {
         if (movieDto != null) {
             validateExistsByNameNotId(movieDto.getName(), movie.getId());
             validateDuration(movieDto.getDuration());
-//            validateIssue(movieDto.getIssue());
             validateRating(movieDto.getRating());
-            validateAge(movieDto.getAge());
         } else {
             throw new BadRequestException("DTO was not get or his type is incorrect");
         }
@@ -122,30 +118,9 @@ public class MovieValidatorImpl implements Validator<Movie> {
         }
     }
 
-    private void validateIssue(Instant issue) {
-        Instant maxDate = LocalDate.now().plusYears(1).atStartOfDay(ZoneId.systemDefault()).toInstant();
-        Instant minDate = LocalDate.parse("1920-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant();
-
-        int minDateResult = issue.compareTo(minDate);
-        int maxDateResult = issue.compareTo(maxDate);
-
-        boolean isValidDateOfBirth = (minDateResult < 0 && maxDateResult > 0);
-
-        if (!isValidDateOfBirth) {
-            throw new MovieIssueInvalidException();
-        }
-    }
-
     private void validateRating(Double rating) {
         if (rating != null && (rating <= 0.0 || rating > 10.0)) {
             throw new MovieRatingException();
-        }
-    }
-
-    private void validateAge(Integer age) {
-        // TODO: 10/10/20  age may be different It depend on a film and why here is MovieDurationException
-        if (age != null && (age <= 0 || age > 21)) {
-            throw new MovieDurationException();
         }
     }
 }
